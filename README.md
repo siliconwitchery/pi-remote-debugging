@@ -2,24 +2,17 @@
 
 ![]()
 
-Here's an iPad talking to a Raspberry Pi 4B that's connected to a JLink debugger and Cortex M4 target for remote embedded debugging on real hardware. Everything on screen just runs from a terminal, in this case over SSH using [Blink](https://blink.sh)
+iPad talking to a Raspberry Pi connected to a JLink debugger and Cortex M4 target. Debugging over SSH using a terminal emulator. Wild!
 
 ## Why would you do this?
-Honestly we asked ourselves the same thing, but once you're no longer hooked up to a jungle of cables for your embedded debugging, all of a sudden you realise that you're free to move to a sofa, switch machine, or even head to a coffee shop and still have complete remote access to hardware running on your bench as if it were all just hooked up to your system.
+This started out as a for-fun project just to see if it was possible. However, once you realize that you're no longer cabled to your desk, you can code from anywhere, on *almost* anything. It's also a great way to avoid constantly moving debuggers and boards when switching project as each Raspberry Pi can be used as a dedicated project instance. It's cheap and easy to set up, and if you really way to get advanced, you could even have it run continuous deployments and testing on hardware.
 
-# Get started
-All these instructions could have just been a shell script, however much of it is down to personal preference. If you're no so familiar with linux terminal based workflow, follow these steps. Otherwise feel free to swap in your own tweaks and requirements along the way. If you want to make your own build script, we'd love for you to fork this repository so people can find this and others for more options.
+# Let's Go!
+All these instructions could have just been a shell script, however much of it is down to personal preference. 
 
-In short, we will set up:
+If you're new to terminal based workflows, these instructions will get you up and running with a beautiful working environment. If you're experienced, you'll probably take just the bits you need and mould it to your preferences.
 
-1. Raspberry Pi OS 64bit
-2. Basic tools such as git and cmake
-3. ARM GCC toolchain
-4. J-Link debugging tools and drivers
-5. A nice terminal based editor
-6. Encryption for your home folder
-7. SSH keys for easy login
-8. Lots of beautification for an enjoyable workflow
+Feel free to use this as a starting point and make your own tweaks. Fork this repository so people can find where it originated, as well as other people's configurations to discover something new.
 
 Let's go!
 
@@ -27,98 +20,162 @@ Let's go!
 
 You will need:
 
-- **Raspberry Pi Model 4B** – *2GB model or higher*
+- **Raspberry Pi 4B** – *2GB or higher*
 - **Micro SD Card** – *16GB+ and way to flash it*
 - **J-Link debugger** – *Or one built into a devkit like the [nRF52-DK](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52-DK)* 
 - **SSH terminal app** – *Or keyboard/screen/mouse if you don't want to go headless*
-- A little patience or some ☕️
+- ☕️
 
-## Prepare the Pi Image
+## 1. Prepare the Pi Image
 
-1. Install latest 64bit Raspberry Pi OS from [here](https://downloads.raspberrypi.org/raspios_arm64/images/) using the Raspberry Pi [Imager](https://www.raspberrypi.org/software/).
 
-2. Create an empty file on the SD card called ssh. On linux/mac simply:
 
-    `touch ssh`
+1. Install the latest 64bit Raspberry Pi OS from [here](https://downloads.raspberrypi.org/raspios_arm64/images/) using the Raspberry Pi [Imager](https://www.raspberrypi.org/software/).
+
+   
+
+2. Create an empty file on the SD card called ssh. On Linux/Mac simply:
+
+   ```bash
+   touch ssh
+   ```
+
+   
 
 3. Create an empty file on the SD card called wpa_supplicant.conf. Again:
 
-   `touch wpa_supplicant.conf`
+   ```bash
+   touch wpa_supplicant.conf
+   ```
+
+   
 
 4. Configure this file with your WiFi settings ([more info](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)):
 
-```
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-country=<2 country code, eg. GB, US, SE, DE>
-
-network={
-	ssid="WIFI_NAME"
-	psk="PASSWORD"
-}
-```
-
-5. Insert the SD card, start your Pi and wait a couple minutes for it to boot.
-
-6. Connect using your favourite terminal app to the pi. We like [Blink](https://blink.sh) on iOS, [iTerm2](https://iterm2.com) on MacOS, and [Hyper](https://hyper.is) on Windows.
-
-   `ssh pi@raspberrypi.local`
-
-7. If it doesn't work, you may have made an error in `wpa_supplicant.conf`. Try to ping your Pi using:
-
-   `ping raspberrypi.local`
-
-8. Once connected, accept any messages about new host keys. If you get an error about host key mismatch, you may need to remove an old entry from the file `~/.ssh/known_hosts` on your local machine.
-
-9. Login password is `raspberry` and you should be logged in! Check you're on the 64bit version using the command:
-
-   `uname -m` it should return the value: `aarch64`
-
-## **Housekeeping**
-
-Let's update everything with:
-
-`sudo apt update`
-
-Then:
-
-`sudo apt full-upgrade`
-
-This can take a while.
-
-Finally we need to install a bunch of standard tools and apps
-
-`sudo apt install git zsh tmux`
-
-sudo apt install git zsh tmux libtool libtool-bin autoconf automake cmake g++ pkg-config unzip gettext
+   ```bash
+   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+   update_config=1
+   country=<2 country code, eg. GB, US, SE, DE>
+   
+   network={
+   	ssid="WIFI_NAME"
+   	psk="PASSWORD"
+   }
+   ```
 
 
 
-**Set up a nice shell**
+1. Insert the SD card, start your Pi and wait a couple minutes for it to boot.
+
+   
+
+2. Connect using your favourite terminal app to the pi. We like [Blink](https://blink.sh) on iOS, [iTerm2](https://iterm2.com) on MacOS, and [Hyper](https://hyper.is) on Windows.
+
+   ```bash
+   ssh pi@raspberrypi.local
+   ```
+
+   
+
+3. Login with the password `raspberry`. Check you're on 64bit using the command `uname -m`. It should return the value: `aarch64`
 
 
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#### If it doesn't work
+
+- There may be an error in `wpa_supplicant.conf`. Check by pinging with `ping raspberrypi.local`.
+- If you get an error about host key mismatch, you may need to remove an old entry from the file `~/.ssh/known_hosts` on your local machine.
 
 
 
-git clone https://github.com/dracula/zsh.git ~/.oh-my-zsh/themes/dracula
+## 2. **Housekeeping**
 
 
 
-ln -s ~/.oh-my-zsh/themes/dracula/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
+1. Update everything with:
+
+   ```bash
+   sudo apt update
+   sudo apt full-upgrade
+   ```
+
+   This can take a while.. Go get a ☕️
+
+   
+
+2. Install some standard tools:
+
+   ```bash
+   sudo apt install git zsh tmux
+   sudo apt install git zsh tmux libtool libtool-bin autoconf automake cmake g++ pkg-config unzip gettext
+   ```
 
 
 
-/* Get our zsh configuration */
+## 3. Setting up a nicer shell
 
 
 
-**Set up a tools folder**
+Bash is nice, but [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/) is better!
+
+1. Run this on your pi:
+
+   ```bash
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+   ```
+
+2. Get a nice theme. For example [Dracula](https://draculatheme.com).
+
+   ```bash
+   git clone https://github.com/dracula/zsh.git ~/.oh-my-zsh/themes/dracula
+   ```
+
+3. Create a link from the theme repo to the folder where zsh actually loads themes from.
+
+   ```bash
+   ln -s ~/.oh-my-zsh/themes/dracula/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
+   ```
+
+4. Grab our template zsh configuration `.zshrc` to get you started. It's all default except for the lines:
+
+   ```bash
+   # Env paths to the J-Link and ARM GCC folders we'll set up later
+   export PATH=$HOME/.gem/ruby/2.6.0/bin:$PATH
+   
+   # Set the theme
+   ZSH_THEME="dracula"
+   
+   # Some handy plugins. Find more here:
+   #   https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins
+   plugins=(git zsh-interactive-cd zsh-autosuggestions)
+   
+   # Aliases. These are shortcuts, for example to shutdown, insted
+   # of tying 'sudo shutdown now'. You can do 'sd'
+   ```
+
+5. Apply the configuration by running:
+
+   ```bash
+   source ~/.zshrc
+   ```
 
 
 
-mkdir ~/tools
+Your terminal should now be transformed!
+
+
+
+## 4. Set up the ARM and J-Link tools
+
+1. Make a tools folder
+
+   ```
+   mkdir ~/tools
+   ```
+
+   
+
+
 
 
 
