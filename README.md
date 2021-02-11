@@ -70,7 +70,7 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
 #### If it doesn't work
 
 - There may be an error in `wpa_supplicant.conf`. Check by pinging with `ping raspberrypi.local`.
-- If you get an error about host key mismatch, you may need to remove an old entry from the file `~/.ssh/known_hosts` on your local machine.
+- If you get an error about DNS spoofing, you may need to remove old entries from the file `~/.ssh/known_hosts` on your local machine.
 
 ## 2. Configure Pi as USB Gadget 
 
@@ -79,23 +79,25 @@ These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/word
 1. Add the line `libcomposite` to the file `/etc/modules`
 
    ```bash
-   nano /etc/modules
+   sudo nano /etc/modules
    # edit the file
    # Save the file and quit with
-   Ctrl-X
-   # Y to confirm
+   <Ctrl-X>
+   # Y <Enter> to confirm
    Y
+   <Enter>
    ```
 
 2. Add the line `denyinterfaces usb0` to the file `/etc/dhcpcd.conf`
 
    ```bash
-   nano /etc/dhcpcd.conf
+   sudo nano /etc/dhcpcd.conf
    # edit the file
    # Save the file and quit with
-   Ctrl-X
-   # Y to confirm
+   <Ctrl-X>
+   # Y <Enter> to confirm
    Y
+   <Enter>
    ```
 
 3. Install dnsmasq
@@ -162,7 +164,7 @@ These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/word
 7. Make this file executable with
 
    ```bash
-   chmod +x /root/usb.sh
+   sudo chmod +x /root/usb.sh
    ```
 
 8. Edit the file `sudo nano /etc/rc.local`  
@@ -174,9 +176,13 @@ These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/word
    exit 0
    ```
 
-Reboot and your Pi should now be an Ethernet gadget. Check it out running on iPad [here](https://www.youtube.com/watch?v=IR6sDcKo3V8&feature=emb_title).
+9. Reboot and your Pi should now be an Ethernet gadget. Check it out running on iPad [here](https://www.youtube.com/watch?v=IR6sDcKo3V8&feature=emb_title). You can access it over USB Ethernet using
 
-**You now have the option to run this either cabled or over your wireless network.**
+   ```bash
+   ssh pi@10.55.0.1
+   ```
+
+**Note: You now have the option to run this either cabled or over your wireless network.**
 
 ## 3. Update everything
 
@@ -191,7 +197,7 @@ Reboot and your Pi should now be an Ethernet gadget. Check it out running on iPa
 2. Install some handy tools
 
    ```bash
-   sudo apt install git zsh tmux libtool libtool-bin autoconf automake cmake g++ pkg-config unzip gettext
+   
    ```
 
 ## 4. Setting up a nicer shell ([oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/))
@@ -279,10 +285,15 @@ Reboot and your Pi should now be an Ethernet gadget. Check it out running on iPa
 1. Build [neovim](https://neovim.io) from source
 
    ```bash
+   # We need some extra tools
+   sudo apt install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip gettext
+   
+   # Clone and build the project
    git clone https://github.com/neovim/neovim.git /tools/neovim
    cd /tools/neovim
-   make CMAKE_BUILD_TYPE=RelWithDebInfo
+   
    # This will take a while. Go get a ☕️
+   make CMAKE_BUILD_TYPE=RelWithDebInfo
    sudo make install
    ```
 
