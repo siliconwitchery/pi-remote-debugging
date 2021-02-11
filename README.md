@@ -22,7 +22,7 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
 - **J-Link debugger** – *Or one built into a devkit like the [nRF52-DK](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52-DK)* 
 - **SSH terminal app** – *Or keyboard/screen/mouse if you don't want to go headless*
 
-## 1. Prepare a Pi Image
+## 1. Prepare Pi Image
 
 1. Install the latest 64bit Raspberry Pi OS from [here](https://downloads.raspberrypi.org/raspios_arm64/images/) using the Raspberry Pi [Imager](https://www.raspberrypi.org/software/)
 
@@ -72,7 +72,7 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
 - There may be an error in `wpa_supplicant.conf`. Check by pinging with `ping raspberrypi.local`.
 - If you get an error about DNS spoofing, you may need to remove old entries from the file `~/.ssh/known_hosts` on your local machine.
 
-## 2. Configure Pi as USB Gadget 
+## 2. Enable USB Gadget 
 
 These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/) guide, but summarised here.
 
@@ -192,15 +192,44 @@ These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/word
    sudo apt update
    sudo apt full-upgrade
    sudo apt install git tmux
+   
+   # Make sure to reboot because some kernal things might have updated
+   sudo reboot
    ```
 
-2. Install some handy tools
+## 4. Improve security
+
+1. Change the default password
 
    ```bash
-   
+   sudo passwd
    ```
 
-## 4. Setting up a nicer shell ([oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/))
+2. Set up a firewall (Be careful to do this right otherwise you'll get locked out)
+
+   ```bash
+   sudo apt install ufw
+   sudo ufw allow ssh
+   sudo ufw enable
+   ```
+
+3. Now that it's enabled, make sure you still have access by opening a new ssh connection. Don't close the old one in case you need to make changes.
+
+   ```
+   ssh pi@raspberrypi.local
+   ```
+
+4. Encrypt the pi user directory where we keep our projects
+
+   ```
+   sudo apt install ecryptfs-utils
+   ```
+
+5. Set up SSH Keys
+
+6. Disable password login
+
+## 5. Nicer shell ([oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/))
 
 1. Install zsh and oh-my-zsh
 
@@ -247,7 +276,7 @@ These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/word
    source ~/.zshrc
    ```
 
-## 5. Set up the ARM and J-Link tools
+## 5. ARM GCC and J-Link
 
 1. Make a tools folder
 
@@ -318,31 +347,3 @@ These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/word
    ```
 
    
-
-
-
-
-
-**Encrypt home folder**
-
-
-
-
-
-**Change password**
-
-
-
-
-
-
-
-**Set up ssh keys**
-
-
-
-
-
-
-
-**Change password**
