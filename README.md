@@ -128,31 +128,17 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
    mkfs.ext4 -j /dev/mapper/crypt-home
    ```
 
-5. Delete the exiting ~/.profile
-
-   ```bash
-   rm ~/.profile
-   ```
-
-6. Make a new one with `nano ~/.profile` and add the content
+5. Append the following to the start of the .profiles file. `nano ~/.profile`
 
    ```bash
    # Mount encrypted workspace
    sudo cryptsetup luksOpen /crypt-home-data crypt-home
-   sudo mkdir /home/pi-crypt
-   sudo mount /dev/mapper/crypt-home /home/pi-crypt
-   sudo chown pi: /home/pi-crypt/
+   sudo mount /dev/mapper/crypt-home /home/pi
    cd ~
    
+   ...
+   otherstuff
    # <Ctrl-X> Y <Enter> to save and exit nano
-   ```
-
-7. Edit the passwd file using `sudo nano /etc/passwd` and replace the entry for `pi` with this line
-
-   ```bash
-   ...
-   pi:x:1000:1000:,,,:/home/pi-crypt:/bin/bash
-   ...
    ```
 
 8. Reboot and see if it worked
