@@ -22,7 +22,7 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
 - **J-Link debugger** – *Or one built into a devkit like the [nRF52-DK](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52-DK)* 
 - **SSH terminal app** – *Or keyboard/screen/mouse if you don't want to go headless*
 
-## 1. Prepare Pi Image
+## Prepare Pi Image
 
 1. Install the latest 64bit Raspberry Pi OS from [here](https://downloads.raspberrypi.org/raspios_arm64/images/) using the Raspberry Pi [Imager](https://www.raspberrypi.org/software/)
 
@@ -65,16 +65,131 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
 
 5. Login with the password `raspberry`. Check you're on 64bit using the command `uname -m`. It should return the value: `aarch64`
 
-#### **Everything from here on out is done on the Raspberry Pi over SSH.**
-
 #### If it doesn't work
 
 - There may be an error in `wpa_supplicant.conf`. Check by pinging with `ping raspberrypi.local`.
 - If you get an error about DNS spoofing, you may need to remove old entries from the file `~/.ssh/known_hosts` on your local machine.
 
-## 2. Enable USB Gadget 
+## Update everything
 
-These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/) guide, but summarised here.
+1. Update everything on the. This can take a while ☕️
+
+   ```bash
+   sudo apt update
+   sudo apt full-upgrade
+   
+   # We will use these later so might as well install them too
+   sudo apt install git tmux cryptsetup
+   
+   # Make sure to reboot because some kernal things might have updated
+   sudo reboot
+   ```
+
+## Improve security
+
+#### Change default password
+
+1. Don't stick to the default password 🙂 Change it with the command
+
+   ```bash
+   passwd
+   ```
+
+#### Home folder encryption
+
+**Note:** This section is somewhat experimental and it's easy to mess everything up. Do it earlier rather than later to save potential screw ups.
+
+**Why:** The SD card is completely unsecure so it's a good idea to encrypt it before deploying sensitive data onto it. It's also a good idea to change the default password and reduce attack surface using a firewall.
+
+**How:** The Pi isn't really powerful enough to handle a fully encrypted SD card. That's okay though as long as we keep our data in a single secure place. System related things can be unsecure. Here we will set up a virtual drive, encrypt it, and then mount it on top of the user home directory. *this is a bit experimental so take it with the entire tub of salt. So far it seems to work for us.*
+
+1. Create a virtual disk of whatever size you like. Here we use 8GB
+
+   ```bash
+   sudo fallocate -l 8G /crypt-home-data
+   sudo dd if=/dev/zero of=/crypt-home-data bs=1G count=8
+   ```
+
+2. Encrypt the drive using cryptsetup
+
+   ```bash
+   sudo cryptsetup -y luksFormat /crypt-home-data
+   ```
+
+3. Open it
+
+   ```bash
+   sudo cryptsetup luksOpen /crypt-home-data crypt-home
+   ```
+
+4. Format the partition to ext4
+
+   ```bash
+   mkfs.ext4 -j /dev/mapper/crypt-home
+   ```
+
+5. Delete the exiting ~/.profile
+
+   ```bash
+   rm ~/.profile
+   ```
+
+6. Make a new one with `nano ~/.profile` and add the content
+
+   ```bash
+   # Mount encrypted workspace
+   sudo cryptsetup luksOpen /crypt-home-data crypt-home
+   sudo mkdir /home/pi-crypt
+   sudo mount /dev/mapper/crypt-home /home/pi-crypt
+   sudo chown pi: /home/pi-crypt/
+   cd ~
+   
+   # <Ctrl-X> Y <Enter> to save and exit nano
+   ```
+
+7. Edit the passwd file using `sudo nano /etc/passwd` and replace the entry for `pi` with this line
+
+   ```bash
+   ...
+   pi:x:1000:1000:,,,:/home/pi-crypt:/bin/bash
+   ...
+   ```
+
+8. Reboot and see if it worked
+
+   ```bash
+   sudo reboot now
+   ```
+
+**If not:** and you're no longer able to login, you'll need to mount the SD card to another Linux machine and check the files. Note that Mac and Windows can't read the ext4 filesystem, so you'll need to use a Linux VM.
+
+#### Install a firewall
+
+1. Be careful to do this right otherwise you'll get locked out
+
+   ```bash
+   sudo apt install ufw
+   sudo ufw allow ssh
+   sudo ufw enable
+   ```
+
+2. Make sure you still have access by opening a new ssh connection. **Don't close the exiting one in case you need to make changes**.
+
+   ```bash
+   ssh pi@raspberrypi.local
+   ```
+
+#### SSH key login
+
+Right now we have two login steps. One for the SSH, and another for the encrypted drive. We can automate both of these.
+
+// TODO
+
+## Enable USB tethering
+
+Rather than connecting over a wired or wireless network. You can configure the USB-C port of the Pi as a Ethernet bridge. Plug it into any computer and you'll be able to SSH over an IP address.
+
+*These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/) guide*
 
 1. Add the line `libcomposite` to the file `/etc/modules`
 
@@ -182,52 +297,7 @@ These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/word
    ssh pi@10.55.0.1
    ```
 
-**Note: You now have the option to run this either cabled or over your wireless network.**
-
-## 3. Update everything
-
-1. Update everything. This can take a while ☕️
-
-   ```bash
-   sudo apt update
-   sudo apt full-upgrade
-   sudo apt install git tmux
-   
-   # Make sure to reboot because some kernal things might have updated
-   sudo reboot
-   ```
-
-## 4. Improve security
-
-1. Change the default password
-
-   ```bash
-   sudo passwd
-   ```
-
-2. Set up a firewall (Be careful to do this right otherwise you'll get locked out)
-
-   ```bash
-   sudo apt install ufw
-   sudo ufw allow ssh
-   sudo ufw enable
-   ```
-
-3. Now that it's enabled, make sure you still have access by opening a new ssh connection. Don't close the old one in case you need to make changes.
-
-   ```
-   ssh pi@raspberrypi.local
-   ```
-
-4. Encrypt the pi user directory where we keep our projects
-
-   ```
-   sudo apt install ecryptfs-utils
-   ```
-
-5. Set up SSH Keys
-
-6. Disable password login
+You'll now have the option to connect over WiFi, Ethernet or USB-C.
 
 ## 5. Nicer shell ([oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/))
 
