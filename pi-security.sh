@@ -93,12 +93,13 @@ mkfs.ext4 -j /dev/mapper/crypt-home
 # Append .profiles to automatically load the encrypted disk
 # at startup
 
-echo "Updating user ~/.profile"
-echo "sudo cryptsetup luksOpen /crypt-home-data crypt-home
+echo "Replacing user ~/.profile for loading secure pi folder on boot"
+cat <<EOF > ~/.profile
+sudo cryptsetup luksOpen /crypt-home-data crypt-home
 sudo mount /dev/mapper/crypt-home /home/pi
 sudo chown pi /home/pi
-cd ~" > ~/.profile
-
+cd ~
+EOF
 
 # Reboot
 #
