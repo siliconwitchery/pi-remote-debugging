@@ -1,7 +1,7 @@
 #!/bin/sh
 # Exit on error
 set -e
-infotag="[\032[0;31mINFO\033[0;0m]"
+infotag='[\033[0;32mINFO\033[0;0m]'
 
 # Install cryptsetup if it isn't installed already
 echo "${infotag} Checking if cryptsetup is installed"
