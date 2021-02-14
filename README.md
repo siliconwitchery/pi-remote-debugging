@@ -47,7 +47,7 @@ This guide shows you how to set up a Raspberry Pi Model 4B for full embedded dev
 4. Connect to the Pi using your favourite terminal app. Password is `raspberry`
 
    ```bash
-ssh pi@raspberrypi.local
+   ssh pi@raspberrypi.local
    ```
 
 #### If it doesn't work
