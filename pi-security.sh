@@ -4,10 +4,11 @@ set -e
 
 
 # Install cryptsetup if it isn't installed already
+echo "Checking if cryptsetup is installed: "
 if ! command -v cryptsetup
 then
     sudo apt -y install cryptsetup
-    printf "\ncryptsetup installed. Re-run this script after reboot"
+    echo "\nCryptsetup installed. Re-run this script after reboot.."
     sudo reboot now
     exit
 fi
@@ -20,7 +21,7 @@ passwd
 # Install a firewall and allow SSH access only
 sudo apt -y install ufw
 sudo ufw allow ssh
-sudo ufw enable
+sudo ufw --force enable
 
 
 # Home folder encryption
@@ -37,19 +38,22 @@ sudo ufw enable
 #      Pi home directory.
 
 # Allocate an empty file which will become our secure disk
-read -p "Specify the size of the secure home folder in \
-gigabytes (enter a number): " sec_flie_size
+read -p "Specify a size for your encrypted home folder in \
+gigabytes (enter a number, eg. 8): " sec_flie_size
 sudo fallocate -l ${sec_flie_size}G /crypt-home-data
-sudo dd if=/dev/zero of=/crypt-home-data bs=1G count=$sec_flie_size
+sudo dd if=/dev/zero of=/crypt-home-data bs=1M count=${sec_flie_size}k status=progress
 
 # Encrypt the file we made
+echo "Encrypting folder, answer YES to the question and \
+create a password for the encrypted folder."
 sudo cryptsetup -y luksFormat /crypt-home-data
 
 # Open and mount as a mapped disk
+echo "Done. Enter the password again to mount and format the folder"
 sudo cryptsetup luksOpen /crypt-home-data crypt-home
 
 # Format the drive
-mkfs.ext4 -j /dev/mapper/crypt-home
+sudo mkfs.ext4 -j /dev/mapper/crypt-home
 
 # Append .profiles to automatically load the encrypted disk
 # at startup
@@ -59,7 +63,7 @@ cd ~
 $(cat ~/.profiles)" > ~/.profiles
 
 # Reboot
-printf "/nSecurity configured. Rebooting.."
+echo "/nSecurity configured. Rebooting.."
 sudo reboot now
 
 
