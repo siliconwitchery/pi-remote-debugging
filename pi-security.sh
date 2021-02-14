@@ -19,6 +19,7 @@ passwd
 
 
 # Install a firewall and allow SSH access only
+echo "Setting up firewall"
 sudo apt -y install ufw
 sudo ufw allow ssh
 sudo ufw --force enable
