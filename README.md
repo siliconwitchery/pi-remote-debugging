@@ -31,7 +31,7 @@ This guide shows you how to set up a Raspberry Pi Model 4B for full embedded dev
    **Option A**: Linux / MacOS users can run the script
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/prep-sd-card.sh)"
+   sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/prep-sd-card.sh)"
    ```
 
    **Option B**: Or do it manually
