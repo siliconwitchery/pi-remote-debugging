@@ -82,25 +82,25 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 4. Install ARM tools
 
    ```bash
-   sudo sh -c "$(wget -O- )"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-arm-tools)"
    ```
 
 5. Install J-Link tools
 
    ```bash
-   sudo sh -c "$(wget -O- )"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-jlink-tools)"
    ```
 
 6. Add a nicer shell
 
    ```bash
-   sudo sh -c "$(wget -O- )"
+   sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/zsh-setup.sh)"
    ```
 
 7. Install a nicer editor *Takes a while* ☕️
 
    ```bash
-   sudo sh -c "$(wget -O- )"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-nvim)"
    ```
 
 ## Good to go
@@ -163,123 +163,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 
-
-
-
-
-## Enable USB tethering
-
-Rather than connecting over a wired or wireless network. You can configure the USB-C port of the Pi as a Ethernet bridge. Plug it into any computer and you'll be able to SSH over an IP address.
-
-*These instructions are taken from [Ben Hardill's](https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/) guide*
-
-1. Add the line `libcomposite` to the file `/etc/modules`
-
-   ```bash
-   sudo nano /etc/modules
-   # edit the file
-   # Save the file and quit with
-   <Ctrl-X>
-   # Y <Enter> to confirm
-   Y
-   <Enter>
-   ```
-
-2. Add the line `denyinterfaces usb0` to the file `/etc/dhcpcd.conf`
-
-   ```bash
-   sudo nano /etc/dhcpcd.conf
-   # edit the file
-   # Save the file and quit with
-   <Ctrl-X>
-   # Y <Enter> to confirm
-   Y
-   <Enter>
-   ```
-
-3. Install dnsmasq
-
-   ```bash
-   sudo apt-get install dnsmasq
-   ```
-
-4. Create a file `sudo nano /etc/dnsmasq.d/usb` with following content
-
-   ```bash
-   interface=usb0
-   dhcp-range=10.55.0.2,10.55.0.6,255.255.255.248,1h
-   dhcp-option=3
-   leasefile-ro
-   ```
-
-5. Create a file `sudo nano /etc/network/interfaces.d/usb0` with the following content
-
-   ```bash
-   auto usb0
-   allow-hotplug usb0
-   iface usb0 inet static
-     address 10.55.0.1
-     netmask 255.255.255.248
-   ```
-
-6. Create a file `sudo nano /root/usb.sh`
-
-   ```bash
-   #!/bin/bash
-   cd /sys/kernel/config/usb_gadget/
-   mkdir -p pi4
-   cd pi4
-   echo 0x1d6b > idVendor # Linux Foundation
-   echo 0x0104 > idProduct # Multifunction Composite Gadget
-   echo 0x0100 > bcdDevice # v1.0.0
-   echo 0x0200 > bcdUSB # USB2
-   echo 0xEF > bDeviceClass
-   echo 0x02 > bDeviceSubClass
-   echo 0x01 > bDeviceProtocol
-   mkdir -p strings/0x409
-   echo "fedcba9876543211" > strings/0x409/serialnumber
-   echo "Ben Hardill" > strings/0x409/manufacturer
-   echo "PI4 USB Device" > strings/0x409/product
-   mkdir -p configs/c.1/strings/0x409
-   echo "Config 1: ECM network" > configs/c.1/strings/0x409/configuration
-   echo 250 > configs/c.1/MaxPower
-   # Add functions here
-   # see gadget configurations below
-   # End functions
-   mkdir -p functions/ecm.usb0
-   HOST="00:dc:c8:f7:75:14" # "HostPC"
-   SELF="00:dd:dc:eb:6d:a1" # "BadUSB"
-   echo $HOST > functions/ecm.usb0/host_addr
-   echo $SELF > functions/ecm.usb0/dev_addr
-   ln -s functions/ecm.usb0 configs/c.1/
-   udevadm settle -t 5 || :
-   ls /sys/class/udc > UDC
-   ifup usb0
-   service dnsmasq restart
-   ```
-
-7. Make this file executable with
-
-   ```bash
-   sudo chmod +x /root/usb.sh
-   ```
-
-8. Edit the file `sudo nano /etc/rc.local `  
-
-   ```bash
-   # Add the following line before exit 0
-   /root/usb.sh
-   
-   exit 0
-   ```
-
-9. Reboot and your Pi should now be an Ethernet gadget. Check it out running on iPad [here](https://www.youtube.com/watch?v=IR6sDcKo3V8&feature=emb_title). You can access it over USB Ethernet using
-
-   ```bash
-   
-   ```
-
-You’ll now have the option to connect over WiFi, Ethernet or USB-C.
 
 ## 5. Nicer shell ([oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/))
 

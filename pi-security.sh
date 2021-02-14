@@ -13,11 +13,11 @@ echo "\nChecking if cryptsetup is installed\n"
 if ! command -v cryptsetup
 then
     # Install
-    sudo apt -y install cryptsetup
+    apt -y install cryptsetup
     echo "\nCryptsetup installed. Re-run this script after reboot"
     
     # Reboot
-    sudo reboot now
+    reboot now
     exit
 fi
 
@@ -25,7 +25,7 @@ fi
 
 # Asks the user to change the default 'raspberry' password
 
-if sudo passwd --status pi | grep NP
+if passwd --status pi | grep NP
 then
     passwd
 fi
@@ -40,9 +40,9 @@ fi
 
 echo "\nSetting up firewall\n"
 
-sudo apt -y install ufw
-sudo ufw allow ssh
-sudo ufw --force enable
+apt -y install ufw
+ufw allow ssh
+ufw --force enable
 
 
 # Home folder encryption
@@ -72,23 +72,23 @@ fi
 
 echo "\nSpecify a size for your encrypted home folder in gigabytes"
 read -p "enter a number, eg. 8: " sec_flie_size
-sudo fallocate -l ${sec_flie_size}G /crypt-home-data
-sudo dd if=/dev/zero of=/crypt-home-data bs=1M count=${sec_flie_size}k status=progress
+fallocate -l ${sec_flie_size}G /crypt-home-data
+dd if=/dev/zero of=/crypt-home-data bs=1M count=${sec_flie_size}k status=progress
 
 # Encrypt the file we made
 
 echo "\nEncrypting folder, answer YES to the question and \
 create a password for the encrypted folder."
-sudo cryptsetup -y luksFormat /crypt-home-data
+cryptsetup -y luksFormat /crypt-home-data
 
 # Open and mount as a mapped disk
 
 echo "\nDone. Enter the password again to mount and format the folder\n"
-sudo cryptsetup luksOpen /crypt-home-data crypt-home
+cryptsetup luksOpen /crypt-home-data crypt-home
 
 # Format the drive
 
-sudo mkfs.ext4 -j /dev/mapper/crypt-home
+mkfs.ext4 -j /dev/mapper/crypt-home
 
 # Append .profiles to automatically load the encrypted disk
 # at startup
@@ -97,8 +97,7 @@ echo "Updating user ~/.profile"
 echo "sudo cryptsetup luksOpen /crypt-home-data crypt-home
 sudo mount /dev/mapper/crypt-home /home/pi
 sudo chown pi /home/pi
-cd ~
-$(cat ~/.profile)" > ~/.profile
+cd ~" > ~/.profile
 
 
 # Reboot
@@ -107,4 +106,4 @@ $(cat ~/.profile)" > ~/.profile
 #       login by pressing <Ctrl-C> at the unlock prompt.
 
 echo "\nSecurity configured. Rebooting.."
-sudo reboot now
+reboot now

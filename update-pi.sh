@@ -5,10 +5,12 @@
 set -e
 
 
+
 # Fully update the Pi
 
 apt update
 apt -y full-upgrade
+
 
 
 # Install a few extra tools for later
@@ -16,9 +18,11 @@ apt -y full-upgrade
 apt -y install git tmux cryptsetup
 
 
+
 # Cleanup old packages
 
 apt -y autoremove
+
 
 
 # And reboot to start any new services
