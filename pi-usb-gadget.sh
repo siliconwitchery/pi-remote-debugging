@@ -98,8 +98,7 @@ chmod +x /root/usb.sh
 
 # Append RC Local to call usb.sh on boot
 
-sed -e '$s/exit 0/\/root\/usb.sh\nexit 0/' /etc/rc.local > ~/temp
-mv ~/temp /etc/rc.local
+sudo sed -ie '$s/exit 0/\/root\/usb.sh\nexit 0/' /etc/rc.local
 
 
 # And reboot to start any new services
