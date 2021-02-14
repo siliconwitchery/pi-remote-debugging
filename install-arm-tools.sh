@@ -26,7 +26,7 @@ mv gcc-arm-none-eabi-*/ /tools/gcc-arm-none-eabi
 
 
 # Remove old files
-echo "Removing archive"
+echo "Removing archive\n"
 rm gcc-arm-none-eabi.bz2
 
 

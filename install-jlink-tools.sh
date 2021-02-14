@@ -30,7 +30,7 @@ cp /tools/jlink/99-jlink.rules /etc/udev/rules.d/
 
 
 # Remove archive
-echo "Removing archive"
+echo "Removing archive\n"
 rm JLink_Linux_arm64.tgz
 
 
