@@ -1,4 +1,4 @@
-# Raspberry Pi Based Remote Embedded Debugging
+# Pi Based Remote Embedded Debugging
 
 ![iPad to Raspberry Pi over USB debugging ARM Cortex M4 with J-Link]()
 
@@ -61,7 +61,7 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 
 **Warning**: The following commands are potentially dangerous. They call a scripts from the internet that are allowed to do anything to your system. You should read the scripts before executing them.
 
-1. Update your system. *Takes a while* ☕️
+1. Update your system. Takes a while ☕️ will **reboot the pi**
 
    ```bash
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/update-pi.sh)"
@@ -145,9 +145,9 @@ nvim
 ## Shoutouts
 
 This guide was peiced together from various articles. Check them out here
-- [Blog post: Using a Raspberry Pi as a remote headless J-Link Server by Niall Cooling](https://blog.feabhas.com/2019/07/using-a-raspberry-pi-as-a-remote-headless-j-link-server/)
-- [Youtube: My Favourite iPad Pro Accessory: The Raspberry Pi 4 by Tech Craft](https://www.youtube.com/watch?v=IR6sDcKo3V8&t=3s)
-- [Blog post: Pi4 USB-C Gadget by Ben Hardill](https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/)
+- [Blog post: **Using a Raspberry Pi as a remote headless J-Link Server** by Niall Cooling](https://blog.feabhas.com/2019/07/using-a-raspberry-pi-as-a-remote-headless-j-link-server/)
+- [Youtube: **My Favourite iPad Pro Accessory: The Raspberry Pi 4** by Tech Craft](https://www.youtube.com/watch?v=IR6sDcKo3V8&t=3s)
+- [Blog post: **Pi4 USB-C Gadget** by Ben Hardill](https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/)
 
 ## Licence
 

@@ -4,9 +4,9 @@ set -e
 
 
 # Install cryptsetup if it isn't installed already
-if ! command -v COMMAND &> cryptsetup
+if ! command -v cryptsetup
 then
-    sudp apt -y install cryptsetup
+    sudo apt -y install cryptsetup
     echo "cryptsetup installed. Re-run this script after reboot"
     sudo reboot now
     exit
