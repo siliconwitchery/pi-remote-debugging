@@ -6,8 +6,8 @@ set -e
 
 
 # Create the tools directory in root
-echo "\nMaking /tools directory. Ignore error if it already exists"
-mkdir /tools
+echo "\Creating the /tools directory"
+mkdir -p /tools
 
 
 # Download and extract the ARM toolchain

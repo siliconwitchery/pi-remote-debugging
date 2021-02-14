@@ -82,13 +82,13 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 4. Install ARM tools
 
    ```bash
-   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-arm-tools)"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-arm-tools.sh)"
    ```
 
 5. Install J-Link tools
 
    ```bash
-   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-jlink-tools)"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-jlink-tools.sh)"
    ```
 
 6. Add a nicer shell
@@ -100,7 +100,7 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 7. Install a nicer editor *Takes a while* ☕️
 
    ```bash
-   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-nvim)"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-nvim.sh)"
    ```
 
 ## Good to go
