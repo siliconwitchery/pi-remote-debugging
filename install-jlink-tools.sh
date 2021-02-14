@@ -25,7 +25,7 @@ sudo mv JLink_Linux_V* /tools/jlink
 
 
 # Copy the rules file
-echo "Copying rules file for USB driver loading"
+echo "Copying rules file for USB driver loading\n"
 cp /tools/jlink/99-jlink.rules /etc/udev/rules.d/
 
 
