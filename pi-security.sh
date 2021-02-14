@@ -7,7 +7,7 @@ set -e
 if ! command -v cryptsetup
 then
     sudo apt -y install cryptsetup
-    echo -e "\ncryptsetup installed. Re-run this script after reboot"
+    printf "\ncryptsetup installed. Re-run this script after reboot"
     sudo reboot now
     exit
 fi
@@ -59,6 +59,7 @@ cd ~
 $(cat ~/.profiles)" > ~/.profiles
 
 # Reboot
+printf "/nSecurity configured. Rebooting.."
 sudo reboot now
 
 

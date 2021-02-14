@@ -14,5 +14,5 @@ sudo apt -y install git tmux cryptsetup
 sudo apt -y autoremove
 
 # And reboot to start any new services
-echo -e "\nEverything updated. Rebooting.."
+printf "\nEverything updated. Rebooting.."
 sudo reboot
