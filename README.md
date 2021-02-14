@@ -76,7 +76,7 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 3. Enable USB tethering
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/usb-gadget.sh)"
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/pi-usb-gadget.sh)"
    ```
 
 4. Install ARM tools
@@ -279,7 +279,7 @@ Rather than connecting over a wired or wireless network. You can configure the U
    
    ```
 
-You'll now have the option to connect over WiFi, Ethernet or USB-C.
+You’ll now have the option to connect over WiFi, Ethernet or USB-C.
 
 ## 5. Nicer shell ([oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/))
 
@@ -287,7 +287,7 @@ You'll now have the option to connect over WiFi, Ethernet or USB-C.
 
    ```bash
    sudo apt install zsh
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+   sh -c “$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)”
    ```
 
 2. Get a nice theme. For example [Dracula](https://draculatheme.com)
@@ -302,24 +302,24 @@ You'll now have the option to connect over WiFi, Ethernet or USB-C.
    ln -s ~/.oh-my-zsh/themes/dracula/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
    ```
 
-4. Grab our template zsh configuration `.zshrc` to get you started. It's all default except for the lines
+4. Grab our template zsh configuration `.zshrc` to get you started. It’s all default except for the lines
 
    ```bash
-   # Env paths to the J-Link and ARM GCC folders we'll set up later
+   # Env paths to the J-Link and ARM GCC folders we’ll set up later
    export PATH=$HOME/tools/jlink:$HOME/tools/arm-none-eabi/bin:$HOME/.local/bin:$PATH
    
    # Set the theme
-   ZSH_THEME="dracula"
+   ZSH_THEME=“dracula”
    
    # Some handy plugins. Find more here:
    #   https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins
    plugins=(git golang history screen tmux zsh-interactive-cd zsh-autosuggestions)
    
    # These are shortcuts, for example to shutdown, insted of typing
-   # 'sudo shutdown now', you can simply type 'sd'.
-   alias nrfjprog="/tools/nrfjprog.sh/nrfjprog.sh"
-   alias sd="sudo shutdown now"
-   alias restart="sudo reboot"
+   # ‘sudo shutdown now’, you can simply type ‘sd’.
+   alias nrfjprog=“/tools/nrfjprog.sh/nrfjprog.sh”
+   alias sd=“sudo shutdown now”
+   alias restart=“sudo reboot”
    ```
 
 5. Apply the configuration and your terminal should be transformed!
@@ -350,7 +350,7 @@ You'll now have the option to connect over WiFi, Ethernet or USB-C.
 3. Download and extract the J-Link tools
 
    ```bash
-   wget --post-data 'accept_license_agreement=accepted&non_emb_ctr=confirmed&submit=Download+software' https://www.segger.com/downloads/jlink/JLink_Linux_arm64.tgz
+   wget —post-data ‘accept_license_agreement=accepted&non_emb_ctr=confirmed&submit=Download+software’ https://www.segger.com/downloads/jlink/JLink_Linux_arm64.tgz
    tar -xf JLink_Linux_arm64.tgz
    mkdir ~/tools/jlink
    mv JLink_Linux_V*/** ~/tools/jlink

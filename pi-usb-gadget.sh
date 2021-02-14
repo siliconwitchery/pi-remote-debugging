@@ -9,11 +9,27 @@ set -e
 # This script is assembled from these instructions by Ben Hardill
 # https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/
 
-sudo printf "\nlibcomposite" >> /etc/modules
+# Append /etc/modules
 
-sudo printf "\ndenyinterfaces usb0" >> /etc/dhcpcd.conf
+printf "\nlibcomposite" >> ~./temp
+sudo mv ~./temp /etc/modules
+
+
+
+# Append dhcpcd.conf
+
+printf "\ndenyinterfaces usb0" >> ~./temp
+sudo mv ~./temp /etc/dhcpcd.conf
+
+
+
+# Install DNS Masq
 
 sudo apt-get install dnsmasq
+
+
+
+# Create DNS profile for USB
 
 sudo cat <<EOF > /etc/dnsmasq.d/usb
 interface=usb0
@@ -22,6 +38,10 @@ dhcp-option=3
 leasefile-ro
 EOF
 
+
+
+# Allow hotplugging and set static IP
+
 sudo cat <<EOF > /etc/network/interfaces.d/usb0
 auto usb0
 allow-hotplug usb0
@@ -29,6 +49,10 @@ iface usb0 inet static
 address 10.55.0.1
 netmask 255.255.255.248
 EOF
+
+
+
+# Create USB gadget settings file
 
 sudo cat <<EOF > /root/usb.sh
 #!/bin/bash
@@ -64,14 +88,20 @@ ifup usb0
 service dnsmasq restart
 EOF
 
+
+
 exit # Make usb.sh executable
 
 sudo chmod +x /root/usb.sh
+
+
 
 # Append RC Local to call usb.sh on boot
 
 sed -e '$s/exit 0/\/root\/usb.sh\nexit 0/' /etc/rc.local > ~/temp
 sudo mv ~/temp /etc/rc.local
+
+
 
 # And reboot to start any new services
 
