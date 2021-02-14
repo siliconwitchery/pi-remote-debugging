@@ -12,7 +12,7 @@ sudo apt install zsh
 
 # Install oh-my-zsh
 
-sh -c “$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)”
+sh -c “$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)”
 
 
 # Install a nice theme. Change this if you want
