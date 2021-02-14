@@ -40,6 +40,16 @@ sudo ufw --force enable
 #      drive, encrypt it, and then mount it over the existing
 #      Pi home directory.
 
+# Stop if the /crypt-home-data folder already exists
+if test -f "/crypt-home-data"
+then
+    echo "/nEncrypted file already exists. Stopped to prevent /
+    overwriting. If you want to resetup this file, back it up /
+    with 'sudo mv /crypt-home-data /crypt-home-data.bak' or / 
+    or delete it with 'sudo rm /crypt-home-data'"
+    exit
+fi
+
 # Allocate an empty file which will become our secure disk
 echo "\nSpecify a size for your encrypted home folder in gigabytes"
 read -p "enter a number, eg. 8: " sec_flie_size
@@ -63,7 +73,7 @@ sudo mkfs.ext4 -j /dev/mapper/crypt-home
 echo "sudo cryptsetup luksOpen /crypt-home-data crypt-home
 sudo mount /dev/mapper/crypt-home /home/pi
 cd ~
-$(cat ~/.profiles)" > ~/.profiles
+$(cat ~/.profile)" > ~/.profile
 
 # Reboot
 echo "\nSecurity configured. Rebooting.."
