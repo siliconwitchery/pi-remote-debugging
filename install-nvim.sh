@@ -31,7 +31,7 @@ ln -s ~/projects/nvim-init/init.vim ~/.config/nvim/init.vim
 
 # Install neovim plugins
 
-:PlugInstall
+nvim +PluginInstall +qall
 
 
 # Done
