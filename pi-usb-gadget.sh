@@ -11,26 +11,27 @@ set -e
 
 # Append /etc/modules
 
-printf "\nlibcomposite" >> ~/temp
-sudo mv ~/temp /etc/modules
+sudo chmod +w /etc/modules
+printf "\nlibcomposite" >> /etc/modules
 
 
 
 # Append dhcpcd.conf
 
-printf "\ndenyinterfaces usb0" >> ~/temp
-sudo mv ~/temp /etc/dhcpcd.conf
+sudo chmod +w /etc/dhcpcd.conf
+printf "\ndenyinterfaces usb0" >> /etc/dhcpcd.conf
 
 
 
 # Install DNS Masq
 
-sudo apt-get install dnsmasq
+sudo apt-get -y install dnsmasq
 
 
 
 # Create DNS profile for USB
 
+sudo touch /etc/dnsmasq.d/usb
 sudo cat <<EOF > /etc/dnsmasq.d/usb
 interface=usb0
 dhcp-range=10.55.0.2,10.55.0.6,255.255.255.248,1h
@@ -42,6 +43,7 @@ EOF
 
 # Allow hotplugging and set static IP
 
+sudo touch /etc/network/interfaces.d/usb0
 sudo cat <<EOF > /etc/network/interfaces.d/usb0
 auto usb0
 allow-hotplug usb0
