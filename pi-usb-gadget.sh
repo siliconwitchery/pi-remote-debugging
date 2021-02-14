@@ -11,28 +11,25 @@ set -e
 
 # Append /etc/modules
 
-sudo chmod +w /etc/modules
 printf "\nlibcomposite" >> /etc/modules
 
 
 
 # Append dhcpcd.conf
 
-sudo chmod +w /etc/dhcpcd.conf
 printf "\ndenyinterfaces usb0" >> /etc/dhcpcd.conf
 
 
 
 # Install DNS Masq
 
-sudo apt-get -y install dnsmasq
+apt-get -y install dnsmasq
 
 
 
 # Create DNS profile for USB
 
-sudo touch /etc/dnsmasq.d/usb
-sudo cat <<EOF > /etc/dnsmasq.d/usb
+cat <<EOF > /etc/dnsmasq.d/usb
 interface=usb0
 dhcp-range=10.55.0.2,10.55.0.6,255.255.255.248,1h
 dhcp-option=3
@@ -43,8 +40,7 @@ EOF
 
 # Allow hotplugging and set static IP
 
-sudo touch /etc/network/interfaces.d/usb0
-sudo cat <<EOF > /etc/network/interfaces.d/usb0
+cat <<EOF > /etc/network/interfaces.d/usb0
 auto usb0
 allow-hotplug usb0
 iface usb0 inet static
@@ -56,7 +52,7 @@ EOF
 
 # Create USB gadget settings file
 
-sudo cat <<EOF > /root/usb.sh
+cat <<EOF > /root/usb.sh
 #!/bin/bash
 cd /sys/kernel/config/usb_gadget/
 mkdir -p pi4
@@ -94,18 +90,18 @@ EOF
 
 exit # Make usb.sh executable
 
-sudo chmod +x /root/usb.sh
+chmod +x /root/usb.sh
 
 
 
 # Append RC Local to call usb.sh on boot
 
 sed -e '$s/exit 0/\/root\/usb.sh\nexit 0/' /etc/rc.local > ~/temp
-sudo mv ~/temp /etc/rc.local
+mv ~/temp /etc/rc.local
 
 
 
 # And reboot to start any new services
 
 echo "\nUSB Ethernet gadget set up. Rebooting.."
-sudo reboot
+reboot now
