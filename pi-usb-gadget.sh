@@ -49,8 +49,8 @@ cat <<EOF > /etc/network/interfaces.d/usb0
 auto usb0
 allow-hotplug usb0
 iface usb0 inet static
-    address 10.55.0.1
-    netmask 255.255.255.248
+  address 10.55.0.1
+  netmask 255.255.255.248
 EOF
 
 
