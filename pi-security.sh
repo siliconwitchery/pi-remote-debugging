@@ -6,7 +6,7 @@ set -e
 # Install cryptsetup if it isn't installed already
 if ! command -v COMMAND &> cryptsetup
 then
-    sudp apt install cryptsetup
+    sudp apt -y install cryptsetup
     echo "cryptsetup installed. Re-run this script after reboot"
     sudo reboot now
     exit
@@ -18,7 +18,7 @@ passwd
 
 
 # Install a firewall and allow SSH access only
-sudo apt install ufw
+sudo apt -y install ufw
 sudo ufw allow ssh
 sudo ufw enable
 
