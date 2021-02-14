@@ -264,7 +264,7 @@ Rather than connecting over a wired or wireless network. You can configure the U
    sudo chmod +x /root/usb.sh
    ```
 
-8. Edit the file `sudo nano /etc/rc.local`  
+8. Edit the file `sudo nano /etc/rc.local `  
 
    ```bash
    # Add the following line before exit 0

@@ -96,6 +96,7 @@ sudo mkfs.ext4 -j /dev/mapper/crypt-home
 echo "Updating user ~/.profile"
 echo "sudo cryptsetup luksOpen /crypt-home-data crypt-home
 sudo mount /dev/mapper/crypt-home /home/pi
+sudo chown pi /home/pi
 cd ~
 $(cat ~/.profile)" > ~/.profile
 
