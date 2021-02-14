@@ -31,7 +31,7 @@ This guide shows you how to set up a Raspberry Pi Model 4B for full embedded dev
    **Option A**: Linux / MacOS users can run the script
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-based-embedded-workflow/main/prep-sd-card.sh)"
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/prep-sd-card.sh)"
    ```
 
    **Option B**: Or do it manually
@@ -64,19 +64,19 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 1. Update your system. *Takes a while* ☕️
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-based-embedded-workflow/main/update-pi.sh)"
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/update-pi.sh)"
    ```
 
 2. Improve security
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-based-embedded-workflow/main/pi-security.sh)"
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/pi-security.sh)"
    ```
 
 3. Enable USB tethering
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-based-embedded-workflow/main/usb-gadget.sh)"
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/usb-gadget.sh)"
    ```
 
 4. Install ARM tools
@@ -141,6 +141,13 @@ nvim
 
 - tmux cheatsheet
 - Vim cheatsheet
+
+## Shoutouts
+
+This guide was peiced together from various articles. Check them out here
+- [Blog post: Using a Raspberry Pi as a remote headless J-Link Server by Niall Cooling](https://blog.feabhas.com/2019/07/using-a-raspberry-pi-as-a-remote-headless-j-link-server/)
+- [Youtube: My Favourite iPad Pro Accessory: The Raspberry Pi 4 by Tech Craft](https://www.youtube.com/watch?v=IR6sDcKo3V8&t=3s)
+- [Blog post: Pi4 USB-C Gadget by Ben Hardill](https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/)
 
 ## Licence
 
