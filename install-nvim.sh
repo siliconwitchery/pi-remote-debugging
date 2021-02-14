@@ -5,9 +5,12 @@
 set -e
 
 
+echo "\nInstalling nvim from source\n"
+
+
 # We need some extra tools
 
-apt install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip gettext
+apt -y install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip gettext
    
 
 # Clone and build the project
@@ -18,6 +21,7 @@ cd /tools/neovim
 
 # This will take a while. Go get a ☕️
 
+echo "\nBuilding nvim. This will take a while\n" 
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 make install
 
@@ -26,11 +30,13 @@ make install
 # You should tweak or replace this later
 
 git clone https://github.com/siliconwitch/nvim-init.git ~/projects
+echo "\nCreating symlink to nvim configuration\n" 
 ln -s ~/projects/nvim-init/init.vim ~/.config/nvim/init.vim
 
 
 # Install neovim plugins
 
+echo "Installing plugins\n" 
 nvim +PluginInstall +qall
 
 
