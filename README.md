@@ -31,7 +31,7 @@ This guide shows you how to set up a Raspberry Pi Model 4B for full embedded dev
    **Option A**: Linux / MacOS users can run the script
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/prep-sd-card.sh)"
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/prep-sd-card.sh)"
    ```
 
    **Option B**: Or do it manually
@@ -64,43 +64,43 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 1. Update your system. Takes a while ☕️ will **reboot the pi**
 
    ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/update-pi.sh)"
+   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/update-pi.sh)"
    ```
 
 2. Improve security
 
    ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/pi-security.sh)"
+   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/pi-security.sh)"
    ```
 
 3. Enable USB tethering
 
    ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/pi-usb-gadget.sh)"
+   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/pi-usb-gadget.sh)"
    ```
 
 4. Install ARM tools
 
    ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-arm-tools.sh)"
+   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-arm-tools.sh)"
    ```
 
 5. Install J-Link tools
 
    ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-jlink-tools.sh)"
+   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-jlink-tools.sh)"
    ```
 
 6. Add a nicer shell
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/zsh-setup.sh)"
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/zsh-setup.sh)"
    ```
 
 7. Install a nicer editor *Takes a while* ☕️
 
    ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/install-nvim.sh)"
+   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-nvim.sh)"
    ```
 
 ## Good to go
