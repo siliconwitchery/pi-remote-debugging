@@ -1,182 +1,164 @@
-# Develop – Flash – Debug Embedded Code from a Headless Raspberry Pi
+# Raspberry Pi Based Remote Embedded Debugging
 
-![]()
+![iPad to Raspberry Pi over USB debugging ARM Cortex M4 with J-Link]()
 
-iPad talking to a Raspberry Pi over USB-C, where the pi is debugging a Cortex M4 target over J-Link. Wild!
+- Cabled or wireless
+- Headless using SSH
+- On board ARM Cortex R/M compiling
+- On board J-Link support for USB debuggers
+- Snazzy terminal based working environment
+- Secure user space for storing and building code
 
-## Why would you do this?
-This can be run cabled or completely wireless over a network, from pretty much any device with a terminal emulator. That makes it great for creating dedicated workspaces and not being chained to a desk to develop embedded code.
+Ever wanted to debug an embedded target remotely? Perhaps from an unconventional such as an iPad. Maybe you want to avoid moving your setup from production to your desk, or maybe you're working on a ground isolated system and can't easily plug your laptop into it.
 
-If you want to get fancy, you can even configure this to run automated builds onto real hardware and connect up test gear over USB.
-
-If you're new to terminal based workflows, these instructions will get you up and running with a beautiful working environment. If you're experienced, you'll probably take just the bits you need and mould it to your preferences.
-
-Feel free to use this as a starting point and make your own tweaks. Fork this repository so people can find where it originated, as well as other people's configurations to discover something new.
-
-**Let's go!**
+This guide shows you how to set up a Raspberry Pi Model 4B for full embedded development and debugging. Thanks to all major tools now being available as ARM64 binaries, it is easy to set up.
 
 ## You will need
 
-- **Raspberry Pi 4B** – *2GB or higher*
-- **Micro SD Card** – *16GB+ and way to flash it*
-- **J-Link debugger** – *Or one built into a devkit like the [nRF52-DK](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52-DK)* 
-- **SSH terminal app** – *Or keyboard/screen/mouse if you don't want to go headless*
+- **Raspberry Pi 4B**  (2GB+)
+- **Micro SD Card** (16GB+)
+- **J-Link debugger** (Or supported devkit such as the [nRF52-DK](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52-DK))
+- **Terminal app** (we like: [Blink](https://blink.sh) *iOS*, [iTerm2](https://iterm2.com) *MacOS*, and [Hyper](https://hyper.is) *Windows/Linux/MacOS*)
 
-## Prepare Pi Image
+## Prepare the SD Card
 
-1. Install the latest 64bit Raspberry Pi OS. [Download](https://downloads.raspberrypi.org/raspios_arm64/images/) 
+1. Install the latest [Raspberry Pi OS 64 bit](https://downloads.raspberrypi.org/raspios_arm64/images/) 
 
-   **Note**: Use the Raspberry Pi [Imager](https://www.raspberrypi.org/software/) to flash the image to your SD card.
+   **Info**: Use the [Raspberry Pi Imager App](https://www.raspberrypi.org/software/) to easily flash your SD card
 
-2. Prepare the SD card for headless operation over SSH and WiFi
+2. Prepare SD for headless operation over SSH and WiFi
 
-   Linux / MacOS users can run this script and follow the steps
+   **Option A**: Linux / MacOS users can run the script
+
+   ```bash
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-based-embedded-workflow/main/prep-sd-card.sh)"
+   ```
+
+   **Option B**: Or do it manually
+
+   1. Create an empty file on the SD card called `ssh`
+   2. Create a file on the SD card called `wpa_supplicant.conf` with the contents shown [here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)
+
+   1. Add the line `dtoverlay=dwc2` to the `config.txt` file
+   2. Add the text `modules-load=dwc2` to the end of the `cmdline.txt` file
+
+3. Insert the SD card into your Pi and wait for it to boot
+
+4. Connect to the Pi using your favourite terminal app. Password is `raspberry`
+
+   ```bash
+ssh pi@raspberrypi.local
+   ```
+
+#### If it doesn't work
+
+- Re-create the `wpa_supplicant.conf` file with correct WiFi credentials
+- DNS spoofing errors can be fixed by removing old entries from the `~/.ssh/known_hosts` file on your local machine
+
+## Setup the Pi
+
+If you're a new Linux user, run all the scripts for a good starting build. Otherwise you can pick and choose which you need. Be sure to read the scripts to details on how the setup works. They are well commented.
+
+**Warning**: The following commands are potentially dangerous. They call a scripts from the internet that are allowed to do anything to your system. You should read the scripts before executing them.
+
+1. Update your system. *Takes a while* ☕️
+
+   ```bash
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-based-embedded-workflow/main/update-pi.sh)"
+   ```
+
+2. Improve security
+
+   ```bash
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-based-embedded-workflow/main/pi-security.sh)"
+   ```
+
+3. Enable USB tethering
+
+   ```bash
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-based-embedded-workflow/main/usb-gadget.sh)"
+   ```
+
+4. Install ARM tools
 
    ```bash
    sh -c "$(curl -fsSL )"
    ```
 
-   
-
-    open a terminal at the root of your SD card, and paste this. Change `CC`, `SSID` and `PASSWORD` to your country code (GB, US, DE, etc), WiFi name, and WiFi password, respectively. If you're on windows, scroll down for the manual steps
+5. Install J-Link tools
 
    ```bash
-   
+   sh -c "$(curl -fsSL )"
    ```
 
-   If you want to do it manually
-
-   1. Create an empty file on the SD card called `ssh`
-   2. Create a file on the SD card called `wpa_supplicant.conf` with the contents ([more info here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)):
+6. Add a nicer shell
 
    ```bash
-   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-   update_config=1
-   country=<2 country code, eg. GB, US, SE, DE>
-   
-   network={
-   	ssid="WIFI_NAME"
-   	psk="PASSWORD"
-   }
+   sh -c "$(curl -fsSL )"
    ```
 
-   1. Add the line "`dtoverlay=dwc2`" to the `config.txt` file
-   2. Add the text "`modules-load=dwc2`" to the end of the `cmdline.txt` file
-
-3. The SD is now prepared. Insert into your Pi and wait a couple minutes for it to boot
-
-4. Connect over SSH using your favourite terminal app. *We like [Blink](https://blink.sh) (iOS), [iTerm2](https://iterm2.com) (MacOS), and [Hyper](https://hyper.is) (Windows/Linux/MacOS)*. **Pi user password is `raspberry`**
+7. Install a nicer editor *Takes a while* ☕️
 
    ```bash
-   ssh pi@raspberrypi.local
+   sh -c "$(curl -fsSL )"
    ```
 
-#### If it doesn't work
+## Good to go
 
-- There may be an error in `wpa_supplicant.conf`. Check by pinging with `ping raspberrypi.local`.
-- If you get an error about DNS spoofing, you may need to remove old entries from the `~/.ssh/known_hosts` file on your local machine.
+#### Connecting over USB
 
-## Setup scripts
+The `usb-tether.sh` script sets up a static IP that allows you to connect to the Pi over its USB-C port. The Pi shows up as an ethernet device and can be connected to using the address `10.55.0.1`
 
-The setup is broken down into several parts. You can choose which parts you want. If you're a new Linux user, run all the scripts for a good starting point. If you're an advanced user, go ahead and look at the scripts and choose whatever you want. Each one is well commented.
+```bash
+ssh pi@10.55.0.1
+```
 
-**Note**: The following commands are potentially dangerous. They call a script from the internet that is allowed to do **anything** on your system. Normally you should read what the script does before executing it.
+#### Some handy commands
 
-1. Update your system
+```bash
+# Calling the ARM GCC compiler
+arm-none-eabi-gcc
 
-   ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-   ```
+# Running J-Link commander
+JLinkExE 
 
-   
+# For working in multiple tabs/windows inside the terminal
+tmux
 
-## Update everything
+# For editing files
+nvim
+
+# Some handy aliases for various common tasks (change or add more in ~/.zshrc)
+# git status
+# git fetch & pull
+# git switch branch
+# git add all and commit
+# shutdown
+# reboot
+```
+
+#### Other handy links
+
+- tmux cheatsheet
+- Vim cheatsheet
+
+## Licence
+
+These instructions and scripts are released unencumbered into the public domain.
+
+Feel free to use this information as a starting point, suggest improvements, or fork this repository so that others may find your version.
+
+All other software installed using these scripts remain under the terms of their respective licenses. 
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 
-## Improve security
 
-#### Change default password
 
-1. Use this command and enter your new password
 
-   ```bash
-   passwd
-   ```
 
-#### Home folder encryption
 
-**Why:** The SD card is completely unencrypted by default. Anyone can plug it into another computer and see the contents of your whole system.
-
-**How:** Fully encrypting the SD card would cause a lot of overhead as the Pi has no dedicated encryption hardware. Instead we can encrypt our home folder and keep any sensitive information there. We will set up a virtual drive, encrypt it, and then mount it over the existing Pi home directory.
-
-1. Make a new empty file of whatever size you like. Here we use 8GB
-
-   ```bash
-   sudo fallocate -l 8G /crypt-home-data
-   sudo dd if=/dev/zero of=/crypt-home-data bs=1G count=8
-   ```
-
-2. Encrypt the file using cryptsetup
-
-   ```bash
-   sudo cryptsetup -y luksFormat /crypt-home-data
-   ```
-
-3. Open it as a mapped drive and enter you password
-
-   ```bash
-   sudo cryptsetup luksOpen /crypt-home-data crypt-home
-   ```
-
-4. Format the drive as ext4
-
-   ```bash
-   mkfs.ext4 -j /dev/mapper/crypt-home
-   ```
-
-5. Append the following to the start of the .profiles file. `nano ~/.profile`
-
-   ```bash
-   # Mount encrypted workspace
-   sudo cryptsetup luksOpen /crypt-home-data crypt-home
-   sudo mount /dev/mapper/crypt-home /home/pi
-   cd ~
-   
-   ...
-   otherstuff
-   # <Ctrl-X> Y <Enter> to save and exit nano
-   ```
-
-8. Reboot and see if it worked
-
-   ```bash
-   sudo reboot now
-   ```
-
-**Note:** It's possible to skip mounting the new pi folder at login by pressing `<Ctrl-C>` at the unlock prompt.
-
-#### Install a firewall
-
-1. Be careful to do this right otherwise you'll get locked out
-
-   ```bash
-   sudo apt install ufw
-   sudo ufw allow ssh
-   sudo ufw enable
-   ```
-
-2. Make sure you still have access by opening a new ssh connection. **Don't close the exiting one in case you need to make changes**.
-
-   ```bash
-   ssh pi@raspberrypi.local
-   ```
-
-#### SSH key login
-
-Right now we have two login steps. One for the SSH, and another for the encrypted drive. We can automate both of these.
-
-// TODO
 
 ## Enable USB tethering
 
@@ -287,7 +269,7 @@ Rather than connecting over a wired or wireless network. You can configure the U
 9. Reboot and your Pi should now be an Ethernet gadget. Check it out running on iPad [here](https://www.youtube.com/watch?v=IR6sDcKo3V8&feature=emb_title). You can access it over USB Ethernet using
 
    ```bash
-   ssh pi@10.55.0.1
+   
    ```
 
 You'll now have the option to connect over WiFi, Ethernet or USB-C.

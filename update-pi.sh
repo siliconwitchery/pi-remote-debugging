@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Exit on error
+set -e
+
 # Fully update the Pi
 sudo apt update
 sudo apt full-upgrade

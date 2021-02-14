@@ -15,7 +15,7 @@ touch ssh
 # Ask the user for wifi credentials
 read -p "Enter country code (eg. SE, DE, US, GB): " wifi_cc
 read -p "Enter WiFi SSID: " wifi_ssid
-read -p "Enter WiFi SSID: " wifi_password
+read -p "Enter WiFi password: " wifi_password
 
 # Creates a file with the 
 cat <<EOF > wpa_supplicant.conf
