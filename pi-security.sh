@@ -61,10 +61,10 @@ sudo ufw --force enable
 if test -f "/crypt-home-data"
 then
     # Stop if the /crypt-home-data folder already exists
-    echo "\nEncrypted file already exists. Stopped to prevent \
-overwriting. If you want to resetup this file, back it up \
-with 'sudo mv /crypt-home-data /crypt-home-data.bak' or \ 
-or delete it with 'sudo rm /crypt-home-data'"
+    echo "\nEncrypted file already exists. Stopped to prevent"
+    echo "overwriting. If you want to resetup this file, back it"
+    echo "up with 'sudo mv /crypt-home-data /crypt-home-data.bak'"
+    echo "or delete it with 'sudo rm /crypt-home-data'"
     exit
 fi
 
