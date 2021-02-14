@@ -88,7 +88,7 @@ EOF
 
 
 
-exit # Make usb.sh executable
+# Make usb.sh executable
 
 chmod +x /root/usb.sh
 
