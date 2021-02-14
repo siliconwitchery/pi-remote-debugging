@@ -22,7 +22,7 @@ cd /tools/neovim
 # This will take a while. Go get a ☕️
 
 echo "\nBuilding nvim. This will take a while\n" 
-make CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
 
 
