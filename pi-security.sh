@@ -70,6 +70,7 @@ sudo mkfs.ext4 -j /dev/mapper/crypt-home
 
 # Append .profiles to automatically load the encrypted disk
 # at startup
+echo "Updating user ~/.profile"
 echo "sudo cryptsetup luksOpen /crypt-home-data crypt-home
 sudo mount /dev/mapper/crypt-home /home/pi
 cd ~
