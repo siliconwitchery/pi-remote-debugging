@@ -15,7 +15,7 @@ sudo apt -y install libtool libtool-bin autoconf automake cmake g++ pkg-config u
 
 # Clone and build the project
 
-git clone https://github.com/neovim/neovim.git /tools/neovim
+sudo git clone https://github.com/neovim/neovim.git /tools/neovim
 cd /tools/neovim
    
 
