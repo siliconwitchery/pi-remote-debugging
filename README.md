@@ -64,43 +64,43 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 1. Update your system. Takes a while ☕️ will **reboot the pi**
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/update-pi.sh)"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/update-pi.sh)"
    ```
 
 2. Improve security
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/pi-security.sh)"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/pi-security.sh)"
    ```
 
 3. Enable USB tethering
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/pi-usb-gadget.sh)"
+   sudo sh -c "$(wget -O- https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugger/main/pi-usb-gadget.sh)"
    ```
 
 4. Install ARM tools
 
    ```bash
-   sh -c "$(curl -fsSL )"
+   sudo sh -c "$(wget -O- )"
    ```
 
 5. Install J-Link tools
 
    ```bash
-   sh -c "$(curl -fsSL )"
+   sudo sh -c "$(wget -O- )"
    ```
 
 6. Add a nicer shell
 
    ```bash
-   sh -c "$(curl -fsSL )"
+   sudo sh -c "$(wget -O- )"
    ```
 
 7. Install a nicer editor *Takes a while* ☕️
 
    ```bash
-   sh -c "$(curl -fsSL )"
+   sudo sh -c "$(wget -O- )"
    ```
 
 ## Good to go
