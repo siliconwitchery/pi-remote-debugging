@@ -28,8 +28,4 @@ network={
 }
 EOF
 
-printf "\ndtoverlay=dwc2" >> config.txt
-
-printf " modules-load=dwc2" >> cmdline.txt
-
 echo "Done. Insert the SD card into your Raspberry Pi."
