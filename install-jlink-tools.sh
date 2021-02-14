@@ -20,14 +20,17 @@ tar -xf JLink_Linux_arm64.tgz
 
 
 # Move it to the tools folder
-mv JLink_Linux_V*/** /tools/jlink
+echo "Moving to /tools..\n"
+sudo mv JLink_Linux_V* /tools/jlink
 
 
 # Copy the rules file
+echo "Copying rules file for USB driver loading"
 cp /tools/jlink/99-jlink.rules /etc/udev/rules.d/
 
 
 # Remove archive
+echo "Removing archive"
 rm JLink_Linux_arm64.tgz
 
 

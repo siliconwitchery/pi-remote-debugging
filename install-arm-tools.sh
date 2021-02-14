@@ -21,11 +21,13 @@ tar -xf gcc-arm-none-eabi.bz2
 
 
 # Move it to the tools folder
+echo "Moving to /tools..\n"
 mv gcc-arm-none-eabi-*/ /tools/gcc-arm-none-eabi
 
 
 # Remove old files
-rm gcc-arm-none-eabi-*.tar*
+echo "Removing archive"
+rm gcc-arm-none-eabi.bz2
 
 
 # Done
