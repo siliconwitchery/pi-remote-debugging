@@ -97,7 +97,7 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 7. Install a nicer editor *Takes a while* ☕️
 
    ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-nvim.sh)"
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-nvim.sh)"
    ```
 
 ## Good to go
@@ -208,36 +208,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    source ~/.zshrc
    ```
 
-## 5. ARM GCC and J-Link
 
-1. Make a tools folder
-
-   ```bash
-   mkdir /tools
-   ```
-
-2. Download and extract the ARM GCC toolchain 
-
-   ```bash
-   cd /tools
-   sudo wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2
-   sudo tar -xf gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2 -C /tools/
-   mkdir /tools/arm-none-eabi
-   mv gcc-*/** /tools/arm-none-eabi
-   rm -r gcc-*
-   ```
-
-3. Download and extract the J-Link tools
-
-   ```bash
-   wget —post-data ‘accept_license_agreement=accepted&non_emb_ctr=confirmed&submit=Download+software’ https://www.segger.com/downloads/jlink/JLink_Linux_arm64.tgz
-   tar -xf JLink_Linux_arm64.tgz
-   mkdir ~/tools/jlink
-   mv JLink_Linux_V*/** ~/tools/jlink
-   rm -r JLink_Linux_V*
-   sudo cp ~/tools/jlink/99-jlink.rules /etc/udev/rules.d/
-   sudo reboot
-   ```
 
 
 

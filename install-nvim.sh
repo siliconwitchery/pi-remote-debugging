@@ -10,7 +10,7 @@ echo "\nInstalling nvim from source\n"
 
 # We need some extra tools
 
-apt -y install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip gettext
+sudo apt -y install libtool libtool-bin autoconf automake cmake g++ pkg-config unzip gettext
    
 
 # Clone and build the project
@@ -23,7 +23,7 @@ cd /tools/neovim
 
 echo "\nBuilding nvim. This will take a while\n" 
 make CMAKE_BUILD_TYPE=RelWithDebInfo
-make install
+sudo make install
 
 
 # Get a nice starting vim configuration.
