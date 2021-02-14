@@ -24,28 +24,24 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
 
 ## Prepare Pi Image
 
-1. Install the latest 64bit Raspberry Pi OS from [here](https://downloads.raspberrypi.org/raspios_arm64/images/) using the Raspberry Pi [Imager](https://www.raspberrypi.org/software/)
+1. Install the latest 64bit Raspberry Pi OS. [Download](https://downloads.raspberrypi.org/raspios_arm64/images/) 
 
-2. If you're on Linux / MacOS, open a terminal at the root of your SD card, and paste this. Change `CC`, `SSID` and `PASSWORD` to your country code (GB, US, DE, etc), WiFi name, and WiFi password, respectively. If you're on windows, scroll down for the manual steps
+   **Note**: Use the Raspberry Pi [Imager](https://www.raspberrypi.org/software/) to flash the image to your SD card.
+
+2. Prepare the SD card for headless operation over SSH and WiFi
+
+   Linux / MacOS users can run this script and follow the steps
 
    ```bash
-   echo "Make sure you run this from the root of your SD card."
+   sh -c "$(curl -fsSL )"
+   ```
+
    
-   touch ssh
+
+    open a terminal at the root of your SD card, and paste this. Change `CC`, `SSID` and `PASSWORD` to your country code (GB, US, DE, etc), WiFi name, and WiFi password, respectively. If you're on windows, scroll down for the manual steps
+
+   ```bash
    
-   cat <<EOF > wpa_supplicant.conf
-   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-   update_config=1
-   country=CC
-   network={
-      ssid="SSID"
-      psk="PASSWORD"
-   }
-   EOF
-   
-   printf "\ndtoverlay=dwc2" >> config.txt
-   
-   printf " modules-load=dwc2" >> cmdline.txt
    ```
 
    If you want to do it manually
@@ -89,7 +85,7 @@ The setup is broken down into several parts. You can choose which parts you want
 1. Update your system
 
    ```bash
-   sh 
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
    ```
 
    
