@@ -26,19 +26,32 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
 
 1. Install the latest 64bit Raspberry Pi OS from [here](https://downloads.raspberrypi.org/raspios_arm64/images/) using the Raspberry Pi [Imager](https://www.raspberrypi.org/software/)
 
-2. Create an empty file on the SD card called ssh. On Linux/Mac simply:
+2. If you're on Linux / MacOS, open a terminal at the root of your SD card, and paste this. Change `CC`, `SSID` and `PASSWORD` to your country code (GB, US, DE, etc), WiFi name, and WiFi password, respectively. If you're on windows, scroll down for the manual steps
 
    ```bash
+   echo "Make sure you run this from the root of your SD card."
+   
    touch ssh
+   
+   cat <<EOF > wpa_supplicant.conf
+   ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+   update_config=1
+   country=CC
+   network={
+      ssid="SSID"
+      psk="PASSWORD"
+   }
+   EOF
+   
+   printf "\ndtoverlay=dwc2" >> config.txt
+   
+   printf " modules-load=dwc2" >> cmdline.txt
    ```
 
-3. Create an empty file on the SD card called wpa_supplicant.conf. Again:
+   If you want to do it manually
 
-   ```bash
-   touch wpa_supplicant.conf
-   ```
-
-4. Configure this file with your WiFi settings ([more info](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)):
+   1. Create an empty file on the SD card called `ssh`
+   2. Create a file on the SD card called `wpa_supplicant.conf` with the contents ([more info here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)):
 
    ```bash
    ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -51,45 +64,45 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
    }
    ```
 
-1. Add the line "`dtoverlay=dwc2`" to the `config.txt` file
+   1. Add the line "`dtoverlay=dwc2`" to the `config.txt` file
+   2. Add the text "`modules-load=dwc2`" to the end of the `cmdline.txt` file
 
-2. Add the text "`modules-load=dwc2`" to the end of the `cmdline.txt` file
+3. The SD is now prepared. Insert into your Pi and wait a couple minutes for it to boot
 
-3. Insert the SD card, start your Pi and wait a couple minutes for it to boot
-
-4. Connect using your favourite terminal app to the pi. We like [Blink](https://blink.sh) on iOS, [iTerm2](https://iterm2.com) on MacOS, and [Hyper](https://hyper.is) on Windows
+4. Connect over SSH using your favourite terminal app. *We like [Blink](https://blink.sh) (iOS), [iTerm2](https://iterm2.com) (MacOS), and [Hyper](https://hyper.is) (Windows/Linux/MacOS)*. **Pi user password is `raspberry`**
 
    ```bash
    ssh pi@raspberrypi.local
    ```
 
-5. Login with the password `raspberry`. Check you're on 64bit using the command `uname -m`. It should return the value: `aarch64`
-
 #### If it doesn't work
 
 - There may be an error in `wpa_supplicant.conf`. Check by pinging with `ping raspberrypi.local`.
-- If you get an error about DNS spoofing, you may need to remove old entries from the file `~/.ssh/known_hosts` on your local machine.
+- If you get an error about DNS spoofing, you may need to remove old entries from the `~/.ssh/known_hosts` file on your local machine.
+
+## Setup scripts
+
+The setup is broken down into several parts. You can choose which parts you want. If you're a new Linux user, run all the scripts for a good starting point. If you're an advanced user, go ahead and look at the scripts and choose whatever you want. Each one is well commented.
+
+**Note**: The following commands are potentially dangerous. They call a script from the internet that is allowed to do **anything** on your system. Normally you should read what the script does before executing it.
+
+1. Update your system
+
+   ```bash
+   sh 
+   ```
+
+   
 
 ## Update everything
 
-1. Update everything on the. This can take a while ☕️
 
-   ```bash
-   sudo apt update
-   sudo apt full-upgrade
-   
-   # We will use these later so might as well install them too
-   sudo apt install git tmux cryptsetup
-   
-   # Make sure to reboot because some kernal things might have updated
-   sudo reboot
-   ```
 
 ## Improve security
 
 #### Change default password
 
-1. Don't stick to the default password 🙂 Change it with the command
+1. Use this command and enter your new password
 
    ```bash
    passwd
@@ -97,32 +110,30 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
 
 #### Home folder encryption
 
-**Note:** This section is somewhat experimental and it's easy to mess everything up. Do it earlier rather than later to save potential screw ups.
+**Why:** The SD card is completely unencrypted by default. Anyone can plug it into another computer and see the contents of your whole system.
 
-**Why:** The SD card is completely unsecure so it's a good idea to encrypt it before deploying sensitive data onto it. It's also a good idea to change the default password and reduce attack surface using a firewall.
+**How:** Fully encrypting the SD card would cause a lot of overhead as the Pi has no dedicated encryption hardware. Instead we can encrypt our home folder and keep any sensitive information there. We will set up a virtual drive, encrypt it, and then mount it over the existing Pi home directory.
 
-**How:** The Pi isn't really powerful enough to handle a fully encrypted SD card. That's okay though as long as we keep our data in a single secure place. System related things can be unsecure. Here we will set up a virtual drive, encrypt it, and then mount it on top of the user home directory. *this is a bit experimental so take it with the entire tub of salt. So far it seems to work for us.*
-
-1. Create a virtual disk of whatever size you like. Here we use 8GB
+1. Make a new empty file of whatever size you like. Here we use 8GB
 
    ```bash
    sudo fallocate -l 8G /crypt-home-data
    sudo dd if=/dev/zero of=/crypt-home-data bs=1G count=8
    ```
 
-2. Encrypt the drive using cryptsetup
+2. Encrypt the file using cryptsetup
 
    ```bash
    sudo cryptsetup -y luksFormat /crypt-home-data
    ```
 
-3. Open it
+3. Open it as a mapped drive and enter you password
 
    ```bash
    sudo cryptsetup luksOpen /crypt-home-data crypt-home
    ```
 
-4. Format the partition to ext4
+4. Format the drive as ext4
 
    ```bash
    mkfs.ext4 -j /dev/mapper/crypt-home
@@ -147,7 +158,7 @@ Feel free to use this as a starting point and make your own tweaks. Fork this re
    sudo reboot now
    ```
 
-**If not:** and you're no longer able to login, you'll need to mount the SD card to another Linux machine and check the files. Note that Mac and Windows can't read the ext4 filesystem, so you'll need to use a Linux VM.
+**Note:** It's possible to skip mounting the new pi folder at login by pressing `<Ctrl-C>` at the unlock prompt.
 
 #### Install a firewall
 
