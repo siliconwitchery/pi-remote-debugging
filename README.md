@@ -39,9 +39,6 @@ This guide shows you how to set up a Raspberry Pi Model 4B for full embedded dev
    1. Create an empty file on the SD card called `ssh`
    2. Create a file on the SD card called `wpa_supplicant.conf` with the contents shown [here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)
 
-   1. Add the line `dtoverlay=dwc2` to the `config.txt` file
-   2. Add the text `modules-load=dwc2` to the end of the `cmdline.txt` file
-
 3. Insert the SD card into your Pi and wait for it to boot
 
 4. Connect to the Pi using your favourite terminal app. Password is `raspberry`

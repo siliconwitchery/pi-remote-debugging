@@ -8,6 +8,16 @@ set -e
 # This script is assembled from these instructions by Ben Hardill
 # https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/
 
+# Append config.txt
+
+printf "\ndtoverlay=dwc2" >> /boot/config.txt
+
+
+# Append cmdline.txt
+
+printf " modules-load=dwc2" >> /boot/cmdline.txt
+
+
 # Append /etc/modules
 
 printf "\nlibcomposite" >> /etc/modules
@@ -39,8 +49,8 @@ cat <<EOF > /etc/network/interfaces.d/usb0
 auto usb0
 allow-hotplug usb0
 iface usb0 inet static
-address 10.55.0.1
-netmask 255.255.255.248
+  address 10.55.0.1
+  netmask 255.255.255.248
 EOF
 
 
