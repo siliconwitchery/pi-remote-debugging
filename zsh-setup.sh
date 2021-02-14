@@ -10,7 +10,7 @@ echo "\nInstalling zsh and oh-my-zsh\n"
 
 # Install zsh
 
-sudo apt install zsh
+sudo apt -y install zsh
 
 
 # Install oh-my-zsh
