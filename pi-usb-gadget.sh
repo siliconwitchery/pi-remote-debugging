@@ -11,15 +11,15 @@ set -e
 
 # Append /etc/modules
 
-printf "\nlibcomposite" >> ~./temp
-sudo mv ~./temp /etc/modules
+printf "\nlibcomposite" >> ~/temp
+sudo mv ~/temp /etc/modules
 
 
 
 # Append dhcpcd.conf
 
-printf "\ndenyinterfaces usb0" >> ~./temp
-sudo mv ~./temp /etc/dhcpcd.conf
+printf "\ndenyinterfaces usb0" >> ~/temp
+sudo mv ~/temp /etc/dhcpcd.conf
 
 
 
