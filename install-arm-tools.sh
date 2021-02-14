@@ -6,7 +6,7 @@ set -e
 
 
 # Create the tools directory in root
-echo "\Creating the /tools directory"
+echo "Creating the /tools directory\n"
 mkdir -p /tools
 
 
@@ -15,7 +15,7 @@ wget https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-
 
 
 # Extract
-echo "\nExtracting.."
+echo "Extracting..\n"
 tar -xf gcc-arm-none-eabi-*.bz2
 
 
@@ -28,4 +28,4 @@ rm gcc-arm-none-eabi-*.tar*
 
 
 # Done
-echo "Done"
+echo "Done\n"

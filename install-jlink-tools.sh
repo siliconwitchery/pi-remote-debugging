@@ -6,7 +6,7 @@ set -e
 
 
 # Create the tools directory in root
-echo "\Creating the /tools directory"
+echo "Creating the /tools directory\n"
 mkdir -p /tools
 
 
@@ -15,7 +15,7 @@ wget --post-data ‘accept_license_agreement=accepted&non_emb_ctr=confirmed&subm
 
 
 # Extract
-echo "\nExtracting.."
+echo "Extracting..\n"
 tar -xf JLink_Linux_arm64.tgz
 
 
@@ -32,5 +32,5 @@ rm JLink_Linux_arm64.tgz
 
 
 # Reboot to enable USB driver
-echo "/nDone. Rebooting to enable USB driver"
+echo "Done. Rebooting to enable USB driver"
 reboot now
