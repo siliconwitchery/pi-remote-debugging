@@ -11,8 +11,7 @@ mkdir -p /tools
 
 
 # Download the J-Link tools
-wget --post-data ‘accept_license_agreement=accepted&non_emb_ctr=confirmed&submit=Download+software’ https://www.segger.com/downloads/jlink/JLink_Linux_arm64.tgz
-
+wget --post-data 'accept_license_agreement=accepted&non_emb_ctr=confirmed&submit=Download+software' https://www.segger.com/downloads/jlink/JLink_Linux_arm64.tgz
 
 # Extract
 echo "Extracting..\n"
