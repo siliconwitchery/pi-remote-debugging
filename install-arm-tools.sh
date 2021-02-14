@@ -11,6 +11,7 @@ mkdir -p /tools
 
 
 # Download the ARM toolchain
+echo "Downloading ARM tools\n"
 curl -fSL https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2 --output gcc-arm-none-eabi.bz2
 
 
