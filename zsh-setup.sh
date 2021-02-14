@@ -37,13 +37,13 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 # Update zshrc with paths
 
 echo "\nUpdating PATH to include ARM and J-Link tools\n"
-sed -i 's/export PATH=.*/PATH=\$HOME\/tools\/jlink:\$HOME\/tools\/arm-none-eabi\/bin:\$HOME\/\.local\/bin:\$PATH/' .zshrc
+sed -i 's/# export PATH=.*/export PATH=\$HOME\/tools\/jlink:\$HOME\/tools\/arm-none-eabi\/bin:\$HOME\/\.local\/bin:\$PATH/' .zshrc
 
 
 # Update .zshrc theme
 
 echo "Updating theme\n"
-sed -i 's/ZSH_THEME=.*/ZSH_THEME="dracula"/' .zshrc
+sed -i '$s/ZSH_THEME=.*/ZSH_THEME="dracula"/' .zshrc
 
 
 # Update .zshrc plugins. Find more here
@@ -63,8 +63,5 @@ alias sd=\"sudo shutdown now\"" >> .zshrc
 
 # Apply new configuration
 
-source ~/.zshrc
-
-
-# Done
-echo "Done"
+echo "\nDone. Rebooting"
+sudo reboot
