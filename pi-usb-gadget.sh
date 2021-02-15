@@ -15,7 +15,7 @@ printf "\ndtoverlay=dwc2" >> /boot/config.txt
 
 # Append cmdline.txt
 
-printf " modules-load=dwc2" >> /boot/cmdline.txt
+sudo sed -i 's/$/ modules-load=dwc2/' /boot/cmdline.txt
 
 
 # Append /etc/modules
