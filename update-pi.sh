@@ -25,4 +25,4 @@ apt -y autoremove
 # And reboot to start any new services
 
 echo "\nEverything updated. Rebooting.."
-reboot now
+reboot

@@ -107,4 +107,4 @@ EOF
 #       login by pressing <Ctrl-C> at the unlock prompt.
 
 echo "\nSecurity configured. Rebooting.."
-reboot now
+reboot

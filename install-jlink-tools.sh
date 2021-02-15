@@ -36,4 +36,4 @@ rm JLink_Linux_arm64.tgz
 
 # Reboot to enable USB driver
 echo "Done. Rebooting to enable USB driver"
-reboot now
+reboot

@@ -104,4 +104,4 @@ sudo sed -ie '$s/exit 0/\/root\/usb.sh\nexit 0/' /etc/rc.local
 # And reboot to start any new services
 
 echo "\nUSB Ethernet gadget set up. Rebooting.."
-reboot now
+reboot

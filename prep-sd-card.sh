@@ -28,4 +28,4 @@ network={
 }
 EOF
 
-echo "Done. Insert the SD card into your Raspberry Pi."
+echo "Done. Insert the SD card into your Raspberry Pi"
