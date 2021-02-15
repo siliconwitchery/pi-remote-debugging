@@ -63,5 +63,5 @@ alias sd=\"sudo shutdown now\"" >> .zshrc
 
 # Apply new configuration
 
-echo "Done"
+echo "Done\n"
 zsh
