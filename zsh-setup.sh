@@ -43,7 +43,7 @@ sed -i 's/# export PATH=.*/export PATH=\/tools\/jlink:\/tools\/gcc-arm-none-eabi
 # Update .zshrc theme
 
 echo "Updating theme\n"
-sed -i '$s/ZSH_THEME=.*/ZSH_THEME="dracula"/' .zshrc
+sed -i 's/ZSH_THEME=.*/ZSH_THEME="dracula"/' .zshrc
 
 
 # Update .zshrc plugins. Find more here
@@ -64,4 +64,5 @@ alias sd=\"sudo shutdown now\"" >> .zshrc
 # Apply new configuration
 
 echo "Done\n"
+sudo chsh -s $(which zsh)
 zsh
