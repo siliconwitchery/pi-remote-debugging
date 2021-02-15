@@ -10,7 +10,7 @@ echo "\nInstalling zsh and oh-my-zsh\n"
 
 # Install zsh
 
-sudo apt -y install zsh
+sudo apt -y install zsh fzf
 
 
 # Install oh-my-zsh
@@ -37,7 +37,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 # Update zshrc with paths
 
 echo "\nUpdating PATH to include ARM and J-Link tools\n"
-sed -i 's/# export PATH=.*/export PATH=\$HOME\/tools\/jlink:\$HOME\/tools\/arm-none-eabi\/bin:\$HOME\/\.local\/bin:\$PATH/' .zshrc
+sed -i 's/# export PATH=.*/export PATH=\/tools\/jlink:\/tools\/gcc-arm-none-eabi\/bin:\$HOME\/\.local\/bin:\$PATH/' .zshrc
 
 
 # Update .zshrc theme
@@ -50,7 +50,7 @@ sed -i '$s/ZSH_THEME=.*/ZSH_THEME="dracula"/' .zshrc
 #https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins
 
 echo "Updating plugins\n"
-sed -i 's/plugins=.*/plugins=\(git golang history screen tmux zsh-interactive-cd zsh-autosuggestions\)/' .zshrc
+sed -i 's/plugins=.*/plugins=\(fzf git golang history screen tmux zsh-interactive-cd zsh-autosuggestions\)/' .zshrc
 
 
 # Add aliases to .zshrc
