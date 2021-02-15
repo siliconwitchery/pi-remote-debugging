@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Exits on error and enable echo escape flags
 
@@ -23,7 +23,7 @@ fi
 
 # Asks the user to change the password
 
-read -p "Change login password? [y/N]: " -n 1 -r
+read -p "Change login password? [y/N]: " -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then 
