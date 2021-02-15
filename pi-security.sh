@@ -94,7 +94,7 @@ echo "Replacing user /home/.profile for loading secure pi folder on boot"
 cat <<EOF > /home/pi/.profile
 sudo cryptsetup luksOpen /crypt-home-data crypt-home
 sudo mount /dev/mapper/crypt-home /home/pi
-sudo chown pi /home/pi
+sudo chown pi:pi /home/pi
 cd ~
 EOF
 
