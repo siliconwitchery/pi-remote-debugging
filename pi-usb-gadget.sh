@@ -101,6 +101,22 @@ chmod +x /root/usb.sh
 sudo sed -ie '$s/exit 0/\/root\/usb.sh\nexit 0/' /etc/rc.local
 
 
+# Add dnsmasq to firewall configuration
+
+if command -v dnsmasq
+then
+  # allow serving DHCP requests
+  sudo ufw allow from any port 68 to any port 67 proto udp
+
+  # allow serving DNS requests
+  sudo ufw allow 53
+
+  # apply changes
+  sudo ufw disable
+  sudo ufw enable
+fi
+
+
 # And reboot to start any new services
 
 echo "\nUSB Ethernet gadget set up. Rebooting.."

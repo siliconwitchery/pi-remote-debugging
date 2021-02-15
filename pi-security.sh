@@ -5,7 +5,6 @@
 set -e
 
 
-
 # Install cryptsetup if it isn't installed already
 
 echo "\nChecking if cryptsetup is installed\n"
@@ -22,14 +21,14 @@ then
 fi
 
 
+# Asks the user to change the password
 
-# Asks the user to change the default 'raspberry' password
-
-if passwd --status pi | grep NP
-then
+read -p "Change login password? [y/N]: " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then 
     passwd
 fi
-
 
 
 # Install a firewall and allow SSH access only
@@ -100,6 +99,7 @@ sudo mount /dev/mapper/crypt-home /home/pi
 sudo chown pi /home/pi
 cd ~
 EOF
+
 
 # Reboot
 #
