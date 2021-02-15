@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Exits on error and enable echo escape flags
 
