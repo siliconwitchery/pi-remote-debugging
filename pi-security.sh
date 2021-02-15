@@ -24,11 +24,9 @@ fi
 # Asks the user to change the password
 
 read -p "Change login password? [y/N]: " -r change_pass
-echo
-if [[ $change_pass =~ ^[Yy]$ ]]
-then 
-    passwd
-fi
+case "$change_pass" in
+  y|Y ) passwd;;
+esac
 
 
 # Install a firewall and allow SSH access only
