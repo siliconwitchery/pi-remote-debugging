@@ -23,9 +23,9 @@ fi
 
 # Asks the user to change the password
 
-read -p "Change login password? [y/N]: " -r
+read -p "Change login password? [y/N]: " -r change_pass
 echo
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $change_pass =~ ^[Yy]$ ]]
 then 
     passwd
 fi
