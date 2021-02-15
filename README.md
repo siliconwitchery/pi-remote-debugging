@@ -1,6 +1,6 @@
 # Pi Based Remote Embedded Debugging
 
-![iPad to Raspberry Pi over USB debugging ARM Cortex M4 with J-Link](/Users/raj/projects/pi-remote-debugging/raspberry-pi-jlink-debugging.jpg)
+![iPad to Raspberry Pi over USB debugging ARM Cortex M4 with J-Link](raspberry-pi-jlink-debugging.jpg)
 
 This guide is a series of shell scripts which can be run on a Raspberry Pi 4 to set up a rich workflow for developing and debugging embedded hardware.
 
