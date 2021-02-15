@@ -64,5 +64,5 @@ alias sd=\"sudo shutdown now\"" >> .zshrc
 # Apply new configuration
 
 echo "Done\n"
-sudo chsh -s $(which zsh)
+sudo chsh -s $(which zsh) pi
 zsh
