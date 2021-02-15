@@ -1,74 +1,82 @@
 # Pi Based Remote Embedded Debugging
 
-![iPad to Raspberry Pi over USB debugging ARM Cortex M4 with J-Link]()
+![iPad to Raspberry Pi over USB debugging ARM Cortex M4 with J-Link](/Users/raj/projects/pi-remote-debugging/raspberry-pi-jlink-debugging.jpg)
 
-- Cabled or wireless
-- Headless using SSH
-- On board ARM Cortex R/M compiling
-- On board J-Link support for USB debuggers
-- Snazzy terminal based working environment
-- Secure user space for storing and building code
+This guide is a series of shell scripts which can be run on a Raspberry Pi 4 to set up a rich workflow for developing and debugging embedded hardware.
 
-Ever wanted to debug an embedded target remotely? Perhaps from an unconventional such as an iPad. Maybe you want to avoid moving your setup from production to your desk, or maybe you're working on a ground isolated system and can't easily plug your laptop into it.
+**Includes:**
 
-This guide shows you how to set up a Raspberry Pi Model 4B for full embedded development and debugging. Thanks to all major tools now being available as ARM64 binaries, it is easy to set up.
+- Headless operation over SSH
+- Option to use wired USB-C networking
+- ARM embedded toolchain
+- J-Link debugging tools
+- Colourful IDE style dev environment using neovim and tmux
+- Encrypted user space for storing SSH keys, source code and sensitive files
+
+**Perfect for:**
+
+- Debugging remote targets
+- Debugging ground isolated targets
+- Cable free workflows
+- Dedicated environments for specific projects
+- Ability to easily switch workstation and re-connect from any terminal
 
 ## You will need
 
-- **Raspberry Pi 4B**  (2GB+)
-- **Micro SD Card** (16GB+)
+- **Raspberry Pi Model 4B**
+- **MicroSD Card**
 - **J-Link debugger** (Or supported devkit such as the [nRF52-DK](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52-DK))
-- **Terminal app** (we like: [Blink](https://blink.sh) *iOS*, [iTerm2](https://iterm2.com) *MacOS*, and [Hyper](https://hyper.is) *Windows/Linux/MacOS*)
+- **Terminal app** (Some we like: [Blink](https://blink.sh) *iOS*, [iTerm2](https://iterm2.com) *MacOS*, and [Hyper](https://hyper.is) *Windows/Linux/MacOS*)
 
-## Prepare the SD Card
+## Installation
 
-1. Install the latest [Raspberry Pi OS 64 bit](https://downloads.raspberrypi.org/raspios_arm64/images/) 
+### Prepare the SD Card
 
-   **Info**: Use the [Raspberry Pi Imager App](https://www.raspberrypi.org/software/) to easily flash your SD card
+#### 1. Install Raspberry Pi OS
 
-2. Prepare SD for headless operation over SSH and WiFi
+Get the latest 64 bit build from [here](https://downloads.raspberrypi.org/raspios_arm64/images/). Use the official [Raspberry Pi Imager](https://www.raspberrypi.org/software/) to easily flash your SD card.
 
-   **Option A**: Linux / MacOS users can run the script
+#### 2. Enable SSH and WiFi
 
-   ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/prep-sd-card.sh)"
-   ```
+On **Linux / MacOS** simply run this from your terminal and follow the steps:
 
-   **Option B**: Or do it manually
+```bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/prep-sd-card.sh)"
+```
 
-   1. Create an empty file on the SD card called `ssh`
-   2. Create a file on the SD card called `wpa_supplicant.conf` with the contents shown [here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)
+**Or do it manually**: Create an empty file on the SD card called `ssh`, and then create a file called `wpa_supplicant.conf` with the contents shown [here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md).
 
-3. Insert the SD card into your Pi and wait for it to boot
+#### 3. Boot the Pi and connect
 
-4. Connect to the Pi using your favourite terminal app. Password is `raspberry`
+Insert the MicroSD into your Pi and wait for boot. Connect over SSH using your favourite terminal app. Password is `raspberry`
 
-   ```bash
-   ssh pi@raspberrypi.local
-   ```
+```
+ssh pi@raspberrypi.local
+```
 
-#### If it doesn't work
+**If it doesn't work**: Your `wpa_supplicant.conf` file might be incorrect. Recreate it. If you get a DNS spoofing error, you'll need to clear out old entries from the `~/.ssh/known_hosts` file on your local machine.
 
-- Re-create the `wpa_supplicant.conf` file with correct WiFi credentials
-- DNS spoofing errors can be fixed by removing old entries from the `~/.ssh/known_hosts` file on your local machine
+### Setup the Pi
 
-## Setup the Pi
+These scripts serve as a starting point for a good working configuration. Try them out, or read what they do and customise them for yourself. They are well commented.
 
-If you're a new Linux user, run all the scripts for a good starting build. Otherwise you can pick and choose which you need. Be sure to read the scripts to details on how the setup works. They are well commented.
+**Warning**: These have only been tested on a fresh Raspberry Pi OS install. Elevated privileges are required to ensure things work correctly, however could easily wreck your system. Use them with care and read them carefully before running them on your working pi setup.
 
-**Warning**: The following commands are potentially dangerous. They call a scripts from the internet that are allowed to do anything to your system. You should read the scripts before executing them.
+#### 1. Update the Pi
 
-1. Update your system. Takes a while ☕️ will **reboot the pi**
+This takes a while ☕️ and will trigger a reboot. Read what it does [here]() and then run this command on your pi:
 
-   ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/update-pi.sh)"
-   ```
+```bash
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/update-pi.sh)"
+```
 
-2. Improve security
+#### 2. Set up security
 
-   ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/pi-security.sh)"
-   ```
+Sets up a **firewall**, and an **encrypted home folder**. Read what it does [here](), and then run on your pi using:
+
+```bash
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/pi-security.sh)"
+```
 
 3. Enable USB tethering
 
@@ -112,7 +120,7 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 
    ```
    sudo raspi-config
-   # [Network Options] -> [Hostname] -> change it -> reboot
+   # [System Options] -> [Hostname] -> change it -> reboot
    ```
 
    
