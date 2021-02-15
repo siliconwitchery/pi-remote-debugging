@@ -21,14 +21,6 @@ then
 fi
 
 
-# Asks the user to change the password
-
-read -p "Change login password? [y/N]: " -r change_pass
-case "$change_pass" in
-  y|Y ) passwd;;
-esac
-
-
 # Install a firewall and allow SSH access only
 #
 # Note: If you need to enable more ports, you should add them
