@@ -85,7 +85,7 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
 5. Install J-Link tools
 
    ```bash
-   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-jlink-tools.sh)"
+   sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-arm-tools.sh)"
    ```
 
 6. Add a nicer shell
@@ -99,6 +99,23 @@ If you're a new Linux user, run all the scripts for a good starting build. Other
    ```bash
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-nvim.sh)"
    ```
+
+## Housekeeping
+
+1. Update the default `raspberry` password using the command
+
+   ```
+   passwd
+   ```
+
+2. Change the host name from `raspberrypi.local` to something else using
+
+   ```
+   sudo raspi-config
+   # [Network Options] -> [Hostname] -> change it -> reboot
+   ```
+
+   
 
 ## Good to go
 
