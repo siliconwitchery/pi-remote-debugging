@@ -16,7 +16,7 @@ then
     echo "\nCryptsetup installed. Re-run this script after reboot"
     
     # Reboot
-    reboot now
+    reboot
     exit
 fi
 
