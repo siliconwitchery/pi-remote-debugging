@@ -113,7 +113,7 @@ then
 
   # apply changes
   sudo ufw disable
-  sudo ufw enable
+  sudo ufw --force enable
 fi
 
 
