@@ -109,7 +109,7 @@ Installs J-Link and USB driver. All debuggers are supported.
 Read what it does [here](https://github.com/siliconwitchery/pi-remote-debugging/blob/main/install-jlink-tools.sh), and then run this script from your pi:
 
 ```bash
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-arm-tools.sh)"
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-jlink-tools.sh)"
 ```
 
 #### 6. Install Zsh as the default shell
