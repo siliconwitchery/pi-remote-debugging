@@ -5,6 +5,11 @@
 set -e
 
 
+# We require this library for GDB
+
+sudo apt install libncurses5
+
+
 # Create the tools directory in root
 echo "\nCreating the /tools directory\n"
 mkdir -p /tools
