@@ -57,16 +57,6 @@ rm JLink_Linux_arm64.tgz
 sudo cp /tools/jlink/99-jlink.rules /etc/udev/rules.d/
 
 
-# Install ctags - We can't use the one from apt, so build from source
-sudo git clone https://github.com/universal-ctags/ctags.git /tools/ctags \
-    --depth=1
-cd /tools/ctags
-sudo ./autogen.sh
-sudo ./configure
-sudo make
-sudo make install
-
-
 # Allow SSH through firewall
 #
 # Note: Remember to update this whenever you need to enable a new service
