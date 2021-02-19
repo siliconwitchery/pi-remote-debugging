@@ -34,7 +34,7 @@ sudo mkdir -p /tools
 
 # Download and extract the ARM GCC toolchain, and clean up once done
 curl -fSL https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/\
-    gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2 \
+gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2 \
     --output gcc-arm-none-eabi.bz2
 tar -xf gcc-arm-none-eabi.bz2
 sudo mv gcc-arm-none-eabi-*/ /tools/gcc-arm-none-eabi

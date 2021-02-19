@@ -30,8 +30,6 @@ This guide is a series of shell scripts which can be run on a **Raspberry Pi 4**
 
 ## Installation
 
-### Prepare the SD Card
-
 #### 1. Install Raspberry Pi OS
 
 Get the latest 64 bit build from [here](https://downloads.raspberrypi.org/raspios_arm64/images/), and use the official [Raspberry Pi Imager](https://www.raspberrypi.org/software/) to flash your SD card.
@@ -56,85 +54,19 @@ ssh pi@raspberrypi.local
 
 **If it doesn't work**: Your `wpa_supplicant.conf` file might be incorrect. Recreate it. If you get a DNS spoofing error, you'll need to clear out old entries from the `~/.ssh/known_hosts` file on your local machine.
 
-### Setup the Pi
+#### 4. Run the setup script
 
-These scripts serve as a starting point. Try them out, adjust them, and customise to your needs. They are well commented.
+This script serves as a starting point. Try it out, then customise it to your needs.
 
-**Warning**: These have only been tested on a fresh Raspberry Pi OS install. Elevated privileges are required to ensure things work correctly, however this could easily wreck a working system. Use them with care and read them carefully before running.
-
-#### 1. Update RPi software
-
-Runs apt update, full-upgrade and installs a few basic tools. This takes a while ☕️
-
-Read what it does [here](https://github.com/siliconwitchery/pi-remote-debugging/blob/main/update-pi.sh), and then run this script from your pi:
+**Warning**: This has only been tested on a fresh Raspberry Pi OS install. The script often calls **sudo** so you should really read it before running it on a live system.
 
 ```bash
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/update-pi.sh)"
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/setup.sh)"
 ```
 
-#### 2. Add security
 
-Sets up a firewall, and an encrypted home folder. Making a large encrypted folder will take a while ☕️
 
-Read what it does [here](https://github.com/siliconwitchery/pi-remote-debugging/blob/main/pi-security.sh), and then run this script from your pi:
-
-```bash
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/pi-security.sh)"
-```
-
-#### 3. USB tethering
-
-Enables the USB-C port to act as an Ethernet device. You'll be able to connect either over your network or directly with a USB-C cable.
-
-Read what it does [here](https://github.com/siliconwitchery/pi-remote-debugging/blob/main/pi-usb-gadget.sh), and then run this script from your pi:
-
-```bash
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/pi-usb-gadget.sh)"
-```
-
-#### 4. Install ARM toolchain
-
-Installs the ARM64 version of the arm-none-eabi toolchain.
-
-Read what it does [here](https://github.com/siliconwitchery/pi-remote-debugging/blob/main/install-arm-tools.sh), and then run this script from your pi:
-
-```bash
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-arm-tools.sh)"
-```
-
-#### 5. Install J-Link
-
-Installs J-Link and USB driver. All debuggers are supported.
-
-Read what it does [here](https://github.com/siliconwitchery/pi-remote-debugging/blob/main/install-jlink-tools.sh), and then run this script from your pi:
-
-```bash
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-jlink-tools.sh)"
-```
-
-#### 6. Install Zsh as the default shell
-
-Installs zsh, oh-my-zsh and demonstrates how to modify the .zshrc for a custom them and extra plugins.
-
-Read what it does [here](https://github.com/siliconwitchery/pi-remote-debugging/blob/main/zsh-setup.sh), and then run this script from your pi:
-
-```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/zsh-setup.sh)"
-```
-
-#### 7. Install Neovim and a bunch of plugins
-
-This takes quite long as it builds neo from source ☕️ Good to run this from `tmux` so you can recover the session if it disconnects.
-
-You'll also get [this](https://github.com/siliconwitch/nvim-init) custom vim configuration. You can change it to your own once you find some settings and plugins you like. 
-
-Read what it does [here](https://github.com/siliconwitchery/pi-remote-debugging/blob/main/install-nvim.sh), and then run this script from your pi:
-
-```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/install-nvim.sh)"
-```
-
-### Housekeeping
+## Housekeeping
 
 #### 1. Update the default `raspberry` password using this command
 
