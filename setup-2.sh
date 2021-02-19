@@ -61,6 +61,14 @@ sudo chown pi:pi /home/pi
 cd ~ 
 
 
+# Install neovim from snapd repository
+sudo apt -y install snapd
+
+
+# Install neovim
+sudo snap install --classic nvim
+
+
 # Grab a starting nvim configuration and symlink it to the nvim settings folder
 git clone https://github.com/siliconwitch/nvim-init.git ~/projects/nvim-init
 mkdir -p ~/.config/nvim
