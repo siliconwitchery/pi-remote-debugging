@@ -48,7 +48,6 @@ sudo apt -y autoremove
 #   git             For version control
 #   tmux            Multitasking inside the terminal
 #   cryptsetup      Encrypting files
-#   neovim          A nice code editor
 #   nodejs          Require for some nvim tools
 #   npm             We need yarn for some nvim tools
 #   clang-tools     Required for autocompletion/intellisense
@@ -56,9 +55,14 @@ sudo apt -y autoremove
 #   fzf             A fuzzy file search, used by nvim plugins
 #   libncurses5     Required to run GDB on ARM64
 #   zsh             A nicer shell
+#   snapd           Required to install the latest neovim
 #
-sudo apt -y install git tmux cryptsetup neovim nodejs npm clang-tools \
-    ripgrep fzf libncurses5 zsh
+sudo apt -y install git tmux cryptsetup nodejs npm clang-tools \
+    ripgrep fzf libncurses5 zsh snapd
+
+
+# Install neovim
+sudo snap install --classic nvim
 
 
 # We'll keep ARM and J-Link tools in this directory

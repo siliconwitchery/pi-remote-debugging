@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=/tools/jlink:/tools/gcc-arm-none-eabi/bin:$HOME/.local/bin:$PATH
+export PATH=/tools/jlink:/tools/gcc-arm-none-eabi/bin:$HOME/.local/bin:/snap/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/pi/.oh-my-zsh"

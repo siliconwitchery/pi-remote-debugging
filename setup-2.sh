@@ -87,6 +87,11 @@ git clone https://github.com/dracula/zsh.git ~/projects/dracula
 ln -s ~/projects/dracula/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
 
 
+# Download the autosuggestions plugin
+git clone https://github.com/zsh-users/zsh-autosuggestions \
+${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+
 # Download custom zsh configuration and apply as default shell
 curl -fSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugg\
 ing/main/.zshrc --output ~/.zshrc
