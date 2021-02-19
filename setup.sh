@@ -35,7 +35,8 @@ sudo mkdir -p /tools
 # Download and extract the ARM GCC toolchain, and clean up once done
 curl -fSL https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/\
 gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2 \
-    --output gcc-arm-none-eabi.bz2
+--output gcc-arm-none-eabi.bz2
+
 tar -xf gcc-arm-none-eabi.bz2
 sudo mv gcc-arm-none-eabi-*/ /tools/gcc-arm-none-eabi
 rm gcc-arm-none-eabi.bz2
@@ -43,9 +44,10 @@ rm gcc-arm-none-eabi.bz2
 
 # Download and extract the J-LINK tools. Copies rule file & cleans up once done
 curl -fSL -X POST -d \
-    'accept_license_agreement=accepted&non_emb_ctr=confirmed&submit=Download+software' \
-    https://www.segger.com/downloads/jlink/JLink_Linux_arm64.tgz \
-    --output JLink_Linux_arm64.tgz
+'accept_license_agreement=accepted&non_emb_ctr=confirmed&submit=Download+\
+software' https://www.segger.com/downloads/jlink/JLink_Linux_arm64.tgz \
+--output JLink_Linux_arm64.tgz
+
 tar -xf JLink_Linux_arm64.tgz
 sudo mv JLink_Linux_V* /tools/jlink
 rm JLink_Linux_arm64.tgz
@@ -139,7 +141,9 @@ ln -s ~/projects/nvim-init/init.vim ~/.config/nvim/init.vim
 
 
 # Install the plug plugin manager for nvim
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/\
+plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/\
+master/plug.vim'
 
 
 # Install neovim plugins and CoC Plugins
@@ -147,7 +151,8 @@ nvim +PlugInstall -c "CocInstall -sync coc-clangd coc-explorer" +qall
 
 
 # Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/\
+tools/install.sh)" "" --unattended
 
 
 # Download a theme and create symlink for zsh to load it
