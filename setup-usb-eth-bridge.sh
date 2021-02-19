@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Exits on error and enable echo escape flags
-
 set -e
 
 
@@ -9,32 +8,26 @@ set -e
 # https://www.hardill.me.uk/wordpress/2019/11/02/pi4-usb-c-gadget/
 
 # Append config.txt
-
 printf "\ndtoverlay=dwc2" >> /boot/config.txt
 
 
 # Append cmdline.txt
-
 sudo sed -i 's/$/ modules-load=dwc2/' /boot/cmdline.txt
 
 
 # Append /etc/modules
-
 printf "\nlibcomposite" >> /etc/modules
 
 
 # Append dhcpcd.conf
-
 printf "\ndenyinterfaces usb0" >> /etc/dhcpcd.conf
 
 
 # Install DNS Masq
-
 apt-get -y install dnsmasq
 
 
 # Create DNS profile for USB
-
 cat <<EOF > /etc/dnsmasq.d/usb
 interface=usb0
 dhcp-range=10.55.0.2,10.55.0.6,255.255.255.248,1h
@@ -44,7 +37,6 @@ EOF
 
 
 # Allow hotplugging and set static IP
-
 cat <<EOF > /etc/network/interfaces.d/usb0
 auto usb0
 allow-hotplug usb0
@@ -55,7 +47,6 @@ EOF
 
 
 # Create USB gadget settings file
-
 cat <<EOF > /root/usb.sh
 #!/bin/bash
 cd /sys/kernel/config/usb_gadget/
@@ -92,18 +83,15 @@ EOF
 
 
 # Make usb.sh executable
-
 chmod +x /root/usb.sh
 
 
 # Append RC Local to call usb.sh on boot
-
 sudo sed -ie '$s/exit 0/\/root\/usb.sh\nexit 0/' /etc/rc.local
 
 
 # Add dnsmasq to firewall configuration
-
-if command -v dnsmasq
+if command -v ufw
 then
   # allow serving DHCP requests
   sudo ufw allow from any port 68 to any port 67 proto udp
@@ -118,6 +106,5 @@ fi
 
 
 # And reboot to start any new services
-
 echo "\nUSB Ethernet gadget set up. Rebooting.."
 reboot
