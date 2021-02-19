@@ -38,7 +38,7 @@
 6. Run the second script to complete the setup
 
    ```bash
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/setup-2.sh)
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/setup-2.sh)"
    ```
 
 7. **Optionally** enable USB-C networking using the script
