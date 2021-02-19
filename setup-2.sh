@@ -89,12 +89,12 @@ ln -s ~/projects/dracula/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
 
 # Download custom zsh configuration and apply as default shell
 curl -fSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugg\
-ing/simple/.zshrc --output ~/.zshrc
+ing/main/.zshrc --output ~/.zshrc
 
 
 # Download custom tmux configuration 
 curl -fSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugg\
-ing/simple/.tmux.conf --output ~/.tmux.conf
+ing/main/.tmux.conf --output ~/.tmux.conf
 
 
 # Set zsh as default shell and reboot
