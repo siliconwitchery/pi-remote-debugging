@@ -14,7 +14,6 @@ sudo apt -y autoremove
 #   git             For version control
 #   tmux            Multitasking inside the terminal
 #   cryptsetup      Encrypting files
-#   ufw             A simple firewall
 #   neovim          A nice code editor
 #   nodejs          Require for some nvim tools
 #   npm             We need yarn for some nvim tools
@@ -24,7 +23,7 @@ sudo apt -y autoremove
 #   libncurses5     Required to run GDB on ARM64
 #   zsh             A nicer shell
 #
-sudo apt -y install git tmux cryptsetup ufw neovim nodejs npm clang-tools \
+sudo apt -y install git tmux cryptsetup neovim nodejs npm clang-tools \
     ripgrep fzf libncurses5 zsh
 
 
@@ -55,15 +54,6 @@ rm JLink_Linux_arm64.tgz
 
 # Enable J-Link USB driver by copying the rule file
 sudo cp /tools/jlink/99-jlink.rules /etc/udev/rules.d/
-
-
-# Allow SSH through firewall
-#
-# Note: Remember to update this whenever you need to enable a new service
-#
-echo "\nSetting up firewall\n"
-ufw allow ssh
-ufw --force enable
 
 
 # Home folder encryption
