@@ -9,12 +9,12 @@ sudo apt update
 
 
 # Install TMUX and start so we don't loose the session of SSH disconnects
-sudo apt install tmux
+sudo apt -y install tmux
 tmux
 
 
 # Do a full update, and clean up old packages. This can take a while
-sudo apt full-upgrade
+sudo apt -y full-upgrade
 sudo apt -y autoremove
 
 
@@ -31,7 +31,7 @@ sudo apt -y autoremove
 #   libncurses5     Required to run GDB on ARM64
 #   zsh             A nicer shell
 #
-sudo apt install git cryptsetup ufw neovim nodejs npm clang-tools \
+sudo apt -y install git cryptsetup ufw neovim nodejs npm clang-tools \
     ripgrep fzf libncurses5 zsh
 
 
