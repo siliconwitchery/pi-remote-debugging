@@ -4,8 +4,8 @@
 # ------
 #   Run this script first using `sh setup-1.sh`, then run setup-2.sh after
 #   the automatic reboot. NOTE: Avoid loosing SSH connection as this 
-#   script takes a while. It will abort if SSH is lost. Use something like
-#   TMUX to keep sessions alive if your connection is flakey.
+#   script takes a while. It will abort if SSH is lost. Use TMUX or MOSH if
+#   your connection is flakey.
 #
 # Brief:
 # ------
@@ -70,7 +70,7 @@ sudo mkdir -p /tools
 
 
 # Download the ARM GCC toolchain
-echo "\nDownloading ARM GCC tools\n"
+echo "Downloading ARM GCC tools\n"
 curl -fSL https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/\
 gcc-arm-none-eabi-10-2020-q4-major-aarch64-linux.tar.bz2 \
 --output gcc-arm-none-eabi.bz2

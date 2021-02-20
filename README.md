@@ -29,7 +29,7 @@
    ssh pi@raspberrypi.local
    ```
 
-5. Run the initial setup script. This takes a while and triggers a reboot
+5. Run the initial setup script. **Note** this takes quite a while to run. If you loose SSH it'll abort the script. To avoid this, you can use MOSH instead of SSH. Install it first using `sudo apt install mosh`, then connect with `mosh pi@raspberrypi.local`
 
    ```bash
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/setup-1.sh)"
