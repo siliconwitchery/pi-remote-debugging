@@ -84,7 +84,7 @@ rm gcc-arm-none-eabi.bz2
 
 
 # Download the J-LINK tools
-echo "\nDownloading J-Link tools\n"
+echo "Downloading J-Link tools\n"
 curl -fSL -X POST -d \
 'accept_license_agreement=accepted&non_emb_ctr=confirmed&submit=Download+\
 software' https://www.segger.com/downloads/jlink/JLink_Linux_arm64.tgz \
@@ -99,12 +99,12 @@ rm JLink_Linux_arm64.tgz
 
 
 # Enable J-Link USB driver by copying the rule file to udev
-echo "\nCopying J-Link USB driver to /ect/udev/rules.d\n"
+echo "Copying J-Link USB driver to /ect/udev/rules.d\n"
 sudo cp /tools/jlink/99-jlink.rules /etc/udev/rules.d/
 
 
 # Reboot
-echo "\nDone! Run setup-2.sh after the reboot\n"
+echo "Done! Run setup-2.sh after the reboot\n"
 sudo reboot
 
 

@@ -2,20 +2,20 @@
 
 ![iPad to Raspberry Pi over USB debugging ARM Cortex M4 with J-Link](raspberry-pi-jlink-debugging.jpg)
 
-**Perfect for** debugging remote or ground isolated targets, as well as running CI/CD directly on hardware.
+**Perfect for** debugging remote or isolated targets, as well as running CI/CD directly on hardware.
 
 ## You will need
 
 - Raspberry Pi Model 4B
 - MicroSD Card
 - J-Link debugger – Or supported devkit such as the [nRF52-DK](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52-DK)
-- Terminal app – Such as: [Blink](https://blink.sh) (iOS), [iTerm2](https://iterm2.com) (MacOS), and [Hyper](https://hyper.is) (Windows/Linux/MacOS)
+- Terminal app – Such as: [Blink](https://blink.sh) (iOS), [iTerm2](https://iterm2.com) (MacOS), or [Hyper](https://hyper.is) (Windows/Linux/MacOS)
 
 ## Installation
 
-1. Get the latest 64 bit build from [here](https://downloads.raspberrypi.org/raspios_arm64/images/), and use the official [Raspberry Pi Imager](https://www.raspberrypi.org/software/) to flash your SD card
+1. Get the latest 64 bit RaspbiOS from [here](https://downloads.raspberrypi.org/raspios_arm64/images/), and use the official [Raspberry Pi Imager](https://www.raspberrypi.org/software/) to flash your SD card
 
-2. Create an empty file on your SD card called `ssh`, and then `wpa_supplicant.conf` with the contents shown [here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md). **Linux / MacOS** users can run this script
+2. Create an empty file on your SD card called `ssh`, as well as `wpa_supplicant.conf` with the contents shown [here](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md). **Linux / MacOS** users can run this script
 
    ```bash
    sh -c "$(curl -fsSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugging/main/prep-sd-card.sh)"
