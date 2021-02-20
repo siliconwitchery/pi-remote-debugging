@@ -81,13 +81,20 @@ plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/\
 master/plug.vim'
 
 
-# Install neovim plugins and CoC Plugins
-nvim --headless +PlugInstall -c "CocInstall -sync coc-clangd coc-explorer" \
-+UpdateRemotePlugins +qall
+# Install neovim plugins
+nvim --headless +PlugInstall +qall
+
+
+# Install CoC plugins
+nvim --headless -c "CocInstall -sync coc-clangd coc-explorer" +qall
 
 
 # Install python provider for nvim
 python3 -m pip install --user --upgrade pynvim
+
+
+# Update remote plugins
+nvim --headless +UpdateRemotePlugins +qall
 
 
 # Install oh-my-zsh
