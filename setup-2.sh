@@ -61,56 +61,67 @@ sudo chown pi:pi /home/pi
 cd ~ 
 
 
-# Install neovim from snapd repository
-sudo apt -y install snapd
-
-
-# Install neovim
+# Install neovim from snapd
+echo "\nInstalling nvim from snapd\n"
+#sudo apt -y install snapd TODO REMOVE IF THIS WORKS
 sudo snap install --classic nvim
 
 
 # Grab a starting nvim configuration and symlink it to the nvim settings folder
+echo "\nGrabbing an nvim config and putting it into ~/projects\n"
 git clone https://github.com/siliconwitch/nvim-init.git ~/projects/nvim-init
 mkdir -p ~/.config/nvim
 ln -s ~/projects/nvim-init/init.vim ~/.config/nvim/init.vim
 
 
 # Install the plug plugin manager for nvim
+echo "\nInstalling nvim plugin manager & plugins\n"
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/\
 plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/\
 master/plug.vim'
 
 
 # Install neovim plugins and CoC Plugins
-nvim +PlugInstall -c "CocInstall -sync coc-clangd coc-explorer" +qall
+nvim --headless +PlugInstall -c "CocInstall -sync coc-clangd coc-explorer" \
++UpdateRemotePlugins +qall
+
+
+# Install python provider for nvim
+python3 -m pip install --user --upgrade pynvim
 
 
 # Install oh-my-zsh
+echo "\nInstalling oh-my-zsh\n"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/\
 tools/install.sh)" "" --unattended
 
 
 # Download a theme and create symlink for zsh to load it
+echo "\nDownloading Dracula theme for zsh\n"
 git clone https://github.com/dracula/zsh.git ~/projects/dracula
 ln -s ~/projects/dracula/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-theme
 
 
 # Download the autosuggestions plugin
+echo "\nDownloading autosuggestions plugin\n"
 git clone https://github.com/zsh-users/zsh-autosuggestions \
 ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 
 # Download custom zsh configuration and apply as default shell
+echo "\nDownloading zsh configuration as .zshrc\n"
 curl -fSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugg\
 ing/main/.zshrc --output ~/.zshrc
 
 
-# Download custom tmux configuration 
+# Download custom tmux configuration
+echo "\nDownloading tmux configuration as .tmux.conf\n"
 curl -fSL https://raw.githubusercontent.com/siliconwitchery/pi-remote-debugg\
 ing/main/.tmux.conf --output ~/.tmux.conf
 
 
 # Set zsh as default shell and reboot
+echo "\nDone! Setting default shell to zsh and rebooting\n"
 sudo chsh -s $(which zsh) pi
 sudo reboot
 
