@@ -82,11 +82,11 @@ master/plug.vim'
 
 
 # Install neovim plugins
-nvim --headless +PlugInstall +qall
+/snap/bin/nvim --headless +PlugInstall +qall
 
 
 # Install CoC plugins
-nvim --headless -c "CocInstall -sync coc-clangd coc-explorer" +qall
+/snap/bin/nvim --headless -c "CocInstall -sync coc-clangd coc-explorer" +qall
 
 
 # Install python provider for nvim
@@ -94,7 +94,7 @@ python3 -m pip install --user --upgrade pynvim
 
 
 # Update remote plugins
-nvim --headless +UpdateRemotePlugins +qall
+/snap/bin/nvim --headless +UpdateRemotePlugins +qall
 
 
 # Install oh-my-zsh
