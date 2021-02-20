@@ -62,7 +62,7 @@ cd ~
 
 
 # Install neovim from snapd
-echo "\nInstalling nvim from snapd\n"
+echo "Installing nvim from snapd\n"
 #sudo apt -y install snapd TODO REMOVE IF THIS WORKS
 sudo snap install --classic nvim
 
