@@ -57,10 +57,11 @@ sudo apt -y autoremove
 #   libncurses5     Required to run GDB on ARM64
 #   zsh             A nicer shell
 #   snapd           An install manager required to get nvim
+#   mosh            More robust than SSH
 #
 echo "\nInstalling various tools\n"
 sudo apt -y install git tmux cryptsetup nodejs npm clang-tools \
-    ripgrep fzf libncurses5 zsh snapd
+    ripgrep fzf libncurses5 zsh snapd mosh
 
 
 # We'll keep ARM and J-Link tools in this directory
